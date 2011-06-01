@@ -1,0 +1,192 @@
+\documentclass{wissdoc}
+
+\usepackage[utf8]{inputenc}   % Unicode input
+
+% Index-Datei öffnen
+\makeindex
+
+% Shortcuts, nicht unbedingt notwendig
+%\input{shortcut}
+
+%PDF Settings
+\definecolor{listingsbg}{rgb}{0.9,0.9,0.9} 
+\definecolor{darkblue}{rgb}{0,0,.5}
+
+\hypersetup{
+      pdftoolbar=true,        % show Acrobat’s toolbar?
+      pdfmenubar=true,        % show Acrobat’s menu?
+      pdffitwindow=true,     % window fit to page when opened
+      pdfstartview={Fit},    % fits the width of the page to the window
+      pdftitle={Robust and Accurate Self Calibration of Stereo Camera Systems},    % title
+      pdfauthor={Anton Feldmann},     % author
+      pdfsubject={Accurate Calibration},   % subject of the document
+      pdfcreator={LiveTex},   % creator of the document
+      pdfproducer={Anton Feldmann}, % producer of the document
+      pdfkeywords={epipolar geometrie, bundel adjustement, prediction bands}, % list of keywords
+      pdfnewwindow=true,      % links in new window
+      pdfpagelabels=true,% view TeX pagenumber in PDF reader
+      pdftex=true,
+      pdfborder={0 0 0.5},
+      colorlinks=true,       % false: boxed links; true: colored links
+      linkcolor=darkblue,          % color of internal links
+      citecolor=blue,        % color of links to bibliography
+      filecolor=magenta,      % color of file links
+      urlcolor=darkblue,
+      bookmarks=true,         % show bookmarks bar?
+      unicode=true,          % non-Latin characters in Acrobat’s bookmarks 
+      breaklinks=true,  
+      menucolor=darkblue,
+      pagebackref=true,
+      plainpages=false,% correct hyperlinks
+      bookmarksopen=true,    
+      bookmarksnumbered=true,
+      raiselinks=true,%
+      %bookmarksopenlevel=1,%
+      hyperindex=true}
+
+
+% citationformat
+\bibpunct{[}{]}{;}{a}{,}{}
+
+
+\author{ }%%insert authorname
+\date{\today}%% insert date std: today
+
+% open glossary
+\newglossary[slg]{symbolslist}{syi}{syg}{Symbol List}
+
+\renewcommand*{\glspostdescription}{}%Den Punkt am Ende jeder Beschreibung deaktivieren
+\makeglossaries
+
+\input{glossary}
+
+\setlength{\headheight}{1.1\baselineskip}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                     Start Document
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\onehalfspace
+
+\graphicspath{{img/}}%Include graphic path default is .ProjectRoot/img 
+
+\lstset{ %\cleardoublepage
+language=Matlab,                % choose the language of the code
+basicstyle=\ttfamily\small,     % the size of the fonts that are used for
+				% the code
+numbers=left,                   % where to put the line-numbers
+numberstyle=\footnotesize\ttfamily,      % the size of the fonts that are used
+				%for the line-numbers
+numbersep=5pt,
+stepnumber=2,                   % the step between two line-numbers. If it's 1
+				% each line will be numbered
+numbersep=5pt,                  % how far the line-numbers are from the code
+xleftmargin=1cm,xrightmargin=1cm,
+linewidth=15cm,
+backgroundcolor=\color{white},  % choose the background color. You must add
+showspaces=false,               % show spaces adding particular underscores
+showstringspaces=false,         % underline spaces within strings
+showtabs=false,                 % show tabs within strings adding particular
+				% underscores
+frame=single,	                % adds a frame around the code
+tabsize=2,	                % sets default tabsize to 2 spaces
+captionpos=b,                   % sets the caption-position to bottom
+breaklines=true,                % sets automatic line breaking
+breakatwhitespace=false,        % sets if automatic breaks should only happen at
+				% whitespace
+title=\lstname,                 % show the filename of files included with
+resetmargins=true,
+breaklines=true,
+commentstyle=\color{blue},
+keywordstyle=\color{blue}\ttfamily,
+escapeinside={\%*}{*)},         % if you want to add a comment within your code
+}
+
+\frontmatter
+\pagenumbering{roman}
+\include{titelseite}%change Titlepage
+
+%%% insert here the pages befor the table of contend. e.g. thanks
+
+\blankpage % Leerseite auf Dankesagungsrückseite
+
+
+%
+%% *************** Hier geht's los ****************
+%% ++++++++++++++++++++++++++++++++++++++++++
+%% Verzeichnisse
+%% ++++++++++++++++++++++++++++++++++++++++++
+\parskip 0pt\tableofcontents % toc bitte einzeilig
+\blankpage
+%% ++++++++++++++++++++++++++++++++++++++++++
+%% Abbildungs und tabellenverzeichnis
+%% ++++++++++++++++++++++++++++++++++++++++++
+\listoffigures
+\blankpage
+\listoftables
+\blankpage
+\listofalgorithms
+\blankpage
+
+%% ++++++++++++++++++++++++++++++++++++++++++
+%% Glossary
+%% ++++++++++++++++++++++++++++++++++++++++++
+%Glossar ausgeben
+\printglossary[style=altlist,title=Glossary]
+%Abkürzungen ausgeben
+\printglossary[type=\acronymtype,style=index,title=List of Abbreviations,toctitle=List of Abbreviations]
+%Symbole ausgeben
+\printglossary[type=symbolslist,style=long,title=List of Symbols,toctitle=List of Symbols]
+\blankpage
+
+% Abstract
+\include{ == abstract document identifier == }
+\blankpage
+
+
+\mainmatter
+
+%%insert here the document identifier 
+\include{abstract}
+\include{chapter1}
+
+%% ++++++++++++++++++++++++++++++++++++++++++
+%% Anhang
+%% ++++++++++++++++++++++++++++++++++++++++++
+
+\appendix
+\include{apandix1}
+
+%% ++++++++++++++++++++++++++++++++++++++++++
+%% Literatur
+%% ++++++++++++++++++++++++++++++++++++++++++
+%  mit dem Befehl \nocite werden auch nicht 
+%  zitierte Referenzen abgedruckt
+%\cleardoublepage
+\blankpage
+\addcontentsline{toc}{chapter}{\bibname}
+\nocite{*} % nur angeben, wenn auch nicht im Text zitierte Quellen 
+           % erscheinen sollen
+\bibliographystyle{apalike-doi}
+\bibliography{ == Bibfile identifier == }
+
+%% ++++++++++++++++++++++++++++++++++++++++++
+%% Index
+%% ++++++++++++++++++++++++++++++++++++++++++
+%\cleardoublepage
+\blankpage
+\printindex            % Index, Stichwortverzeichnis
+
+\blankpage
+
+\backmatter
+\onecolumn
+
+% Die folgende Erklärung ist für Diplomarbeiten Pflicht
+% (siehe Prüfungsordnung), für Studienarbeiten nicht notwendig
+\include{ garantee }
+\blankpage % Leerseite auf Lebenslauf
+
+\end{document}
