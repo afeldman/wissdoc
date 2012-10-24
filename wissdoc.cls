@@ -1,17 +1,52 @@
 %% LaTeX2e Formatklasse für Diplom-, Studien- oder Doktorarbeit    -*-Mode: LaTeX;-*-
+%%
+%% Copyright (C) 2012 anton Feldmann
+%%
+%%Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+%%
+%%The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+%%
+%%THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%%
+%%
 %% Autor: Anton Feldmann anton.feldmann@gmail.com
 %% --
 %%
 
 \NeedsTeXFormat{LaTeX2e}[1995/12/01] % Basis Latex2e
-\ProvidesClass{wissdoc}[2011/05/30 Anton Feldmann - Wissenschaftliches Dokument]
+\ProvidesClass{wissdoc}[2012/10/25 Anton Feldmann - Wissenschaftliches Dokument]
 
-\LoadClass[a4paper,12pt,twoside,titlepage,toc=flat]{scrbook} % diese Klasse basiert auf ``scrbook''
+%% start options
+\newif\if@useMath% usepackages for mathamtics
+\newif\if@useGerman
 
-\RequirePackage[automark,nouppercase]{scrpage2}
-\RequirePackage{scrhack}
+%\@useMathfalse   %math option
+%\@useGermanfalse %german Option
 
-\usepackage{etex}
+\def\useMath{\global\@useMathfalse}
+\def\useGerman{\global\@useGermanfalse}
+
+%option of wissdoc class
+\DeclareOption{math}{\global\@useMathtrue}
+\DeclareOption{fgerman}{\@useGermantrue}
+\DeclareOption{a4paper}{\PassOptionsToClass{a4paper}{srcbook}}
+\DeclareOption{twoside}{\PassOptionsToClass{twoside}{srcbook}}
+\DeclareOption{12pt}{\PassOptionsToClass{12pt}{scrbook}}
+\DeclareOption{titlepage}{\PassOptionsToClass{titlepage}{srcbook}}
+\DeclareOption*{\ClassWarningNoLine{wissdoc}{Unknown option `\CurrentOption' specified for 'wissdoc' class}}
+%\ExecuteOptions{a4paper,12pt,twoside,titlepage}
+\ProcessOptions
+
+
+%% start super class
+\LoadClass[toc=flat]{scrbook} % diese Klasse basiert auf ``scrbook''
+
+
+%% german language package
+\if@useGerman
+      \RequirePackage{ngerman}
+      \RequirePackage[utf8]{fontenc}      % T1-encoded fonts: auch Wörter mit Umlauten trennen
+\fi
 
 \RequirePackage{ifthen}
 \RequirePackage{ifpdf}
@@ -19,18 +54,13 @@
 \RequirePackage{makeidx}          % wir wollen auch einen Index
 \RequirePackage[a4paper]{geometry} % Seitenränder einstellen leichtgemacht
 
-% usepackages for mathamtics
-\RequirePackage{amscd}
-\RequirePackage{bbm}
-\RequirePackage{amsfonts}
-\RequirePackage{amsmath}
-\RequirePackage{amssymb}
-\RequirePackage{shadethm}
-\RequirePackage{amsthm}
+\RequirePackage[automark,nouppercase]{scrpage2}
+\RequirePackage{scrhack}
+
+\RequirePackage{etex}
 
 % litrature package
 \RequirePackage{natbib}
-
 
 % drawings package
 \RequirePackage{color}
@@ -38,16 +68,8 @@
 \RequirePackage{framed}
 \RequirePackage{colortbl}
 \RequirePackage{listings}
-\RequirePackage{epsfig}
-\RequirePackage{xy}
+\RequirePackage{epsfig,wrapfig}
 \RequirePackage{graphicx}  % um Graphiken einzubinden
-%%drawings packages pdf/ps
-\ifpdf
-  \RequirePackage{pst-pdf}
-\else
-  \RequirePackage{pst-all}
-\fi
-
 \RequirePackage{setspace}
 \RequirePackage{lscape}		% landscape picture
 \RequirePackage{longtable}     	% seiten{\"u}bergreifende Tabellen
@@ -59,11 +81,8 @@
 
 \RequirePackage{capt-of}
 
-% Use this form to include EPS (latex) or PDF (pdflatex) files:
-\RequirePackage{leftidx}
-
 %glossar
-\usepackage[
+\RequirePackage[
 nonumberlist, %keine Seitenzahlen anzeig%%----- nun ngerman laden
 acronym,      %ein Abkürzungsverzeichnis erstellen
 toc,          %Einträge im Inhaltsverzeichnis
@@ -74,11 +93,38 @@ section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
 %% PDF dependent stuff (inspired by Frank Pählke)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\RequirePackage[bookmarks]{hyperref}
 
-\RequirePackage[dvips,
-		latex2html,
-		ps2pdf,
-		bookmarks]{hyperref}
+%PDF Settings
+\definecolor{listingsbg}{rgb}{0.9,0.9,0.9}
+\definecolor{darkblue}{rgb}{0,0,.5}
+
+\hypersetup{
+      pdftoolbar=true,        % show Acrobat’s toolbar?
+      pdfmenubar=true,        % show Acrobat’s menu?
+      pdffitwindow=true,      % window fit to page when opened
+      pdfstartview={Fit},     % fits the width of the page to the window
+      pdftitle={Robust and Accurate Self Calibration of Stereo Camera Systems},    % title
+      pdfauthor={Anton Feldmann},     % author
+      pdfsubject={Accurate Calibration},   % subject of the document
+      pdfcreator={LiveTex},   % creator of the document
+      pdfproducer={Anton Feldmann}, % producer of the document
+      pdfkeywords={epipolar geometrie, bundel adjustement, prediction bands}, % list of keywords
+      pdfnewwindow=true,      % links in new window
+      pdfborder={0 0 0.5},
+      colorlinks=true,        % false: boxed links; true: colored links
+      linkcolor=darkblue,     % color of internal links
+      citecolor=blue,         % color of links to bibliography
+      filecolor=magenta,      % color of file links
+      urlcolor=darkblue,
+      unicode=true,           % non-Latin characters in Acrobat’s bookmarks
+      breaklinks=true,
+      menucolor=darkblue,
+      plainpages=false,       % correct hyperlinks
+      bookmarksopen=true,
+      bookmarksnumbered=true,
+      raiselinks=true,%
+}
 
 \RequirePackage{bookmark}[2007/02/20]
 
@@ -86,7 +132,7 @@ section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
 
 
 % Schriftart
-\usepackage{times}
+\RequirePackage{times}
 %\usepackage{palatino}
 %\usepackage{newcent}      %for sophisticated font style
 %\usepackage{helvet}
@@ -94,13 +140,13 @@ section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
 %\usepackage{courier} \raggedright
 %\renewcommand{\familydefault}{\ttdefault}
 
-%Danach muss man die Standardschriftart setzen mit dem Befehl \fontfamily{abr}\selectfont, der für das gesamte restliche Dokument gilt, oder mit {\fontfamily{abr}\selectfont Some Text} um nur den eingeklammerten Bereich zu betreffen. abr ist die Abkürzung für die Schriftart. Die häufigsten sind ptm (Times), phv (Helvetica), pcr (Courier), pbk (Bookman), pag (Avant Garde), ppl (Palatino), bch (Charter), pnc (New Century Schoolbook), pzc (Zapf Chancery), put (Utopia ). 
+%Danach muss man die Standardschriftart setzen mit dem Befehl \fontfamily{abr}\selectfont, der für das gesamte restliche Dokument gilt, oder mit {\fontfamily{abr}\selectfont Some Text} um nur den eingeklammerten Bereich zu betreffen. abr ist die Abkürzung für die Schriftart. Die häufigsten sind ptm (Times), phv (Helvetica), pcr (Courier), pbk (Bookman), pag (Avant Garde), ppl (Palatino), bch (Charter), pnc (New Century Schoolbook), pzc (Zapf Chancery), put (Utopia ).
 
 % mathfonts
 %\usepackage{mathpazo}
 %\usepackage{euler}
 %\usepackage{cmbright}
-%\usepackage{ccfonts,eulervm} 
+%\usepackage{ccfonts,eulervm}
 %\usepackage[math]{iwona}
 %\usepackage[math]{kurier}
 %\usepackage{kmath,kerkis}
@@ -123,20 +169,256 @@ section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
 \RequirePackage{shadow} % für schattierte Boxen etc.
 \RequirePackage{placeins}
 
+%%% PSTricks for PDFLatex
+%%drawings packages pdf/ps
+\ifpdf
+  \RequirePackage{pstricks}
+%   \RequirePackage[dvips={-o -Ppdf},
+% 	      pspdf={-dAutoRotatePages=/None},
+% 	      pdfcrop={},
+% 	      cleanup={log,aux,dvi,ps,pdf},
+% 	      latex={-interaction=nonstopmode},
+% 	      final]{auto-pst-pdf}%set "-shell-escape in pdflatex options"
+  \RequirePackage{pst-pdf}
+\else
+  \RequirePackage{pstricks}
+\fi
+
 %% Schusterjungen und Hurenkinder verhindern.
 %% Siehe deutsches TeX-FAQ (6.1.3)
-\RequirePackage{schuster}
+\clubpenalty = 10000% Disable single lines at the start of a paragraph (Schusterjungen)
+\widowpenalty = 10000 \displaywidowpenalty = 10000% Disable single lines at the end of a paragraph (Hurenkinder)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	             Math
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\if@useMath
+ \typeout{***** **** **** **** ****}
+ \typeout{***** use math ****}
+ \typeout{***** start read packages ****}
+ \RequirePackage{bbm,amsfonts,amsmath,amscd,amssymb,shadethm,amsthm} %ams math bib
+ \RequirePackage[all,color]{xy}
+ \RequirePackage{leftidx}% write left index:
+
+ \typeout{***** setup enviroments ****}
+ \newshadetheorem{thms}{Theorem}[chapter]
+ \newshadetheorem{definitions}{Definition}[chapter]
+ \newshadetheorem{cors}{Corollar}[chapter]
+ \newshadetheorem{zuss}{Sammary}[chapter]
+ \newshadetheorem{axioms}{Axiom}[chapter]
+ \newshadetheorem{profs}{Proof}[chapter]
+
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+
+\newenvironment{prof}[1][]{%
+  \definecolor{shadethmcolor}{rgb}{1.,1.,1.}%{.9,.9,.95}%
+  \definecolor{shaderulecolor}{rgb}{0.0,0.0,0.0}%
+  %\setlength{\shadeboxrule}{1.5pt}%
+  \begin{profs}[#1]\hspace*{1mm}%
+}{{\hfill\qed\vspace{1ex}}\end{profs}}
+
+\newenvironment{thm}[1][]{%
+  \definecolor{shadethmcolor}{rgb}{1.0,1.0,1.0}%{.9,.9,.95}%
+  \definecolor{shaderulecolor}{rgb}{0.0,0.0,0.0}%
+  \setlength{\shadeboxrule}{1.5pt}%
+  \begin{thms}[#1]\hspace*{1mm}%
+}{\end{thms}}
+
+\newenvironment{definition}[1][]{%
+  \definecolor{shadethmcolor}{rgb}{1.0,1.0,10.}%
+%  \definecolor{shadethmcolor}{rgb}{1.,1.,1.}%
+  \definecolor{shaderulecolor}{rgb}{0.0,0.0,0.0}%
+  \setlength{\shadeboxrule}{1.5pt}%
+  \begin{definitions}[#1]\hspace*{1mm}%
+}{\end{definitions}}
+
+\newenvironment{corr}[1][]{%
+  \definecolor{shadethmcolor}{rgb}{1.0,1.0,1.0}%
+  \definecolor{shaderulecolor}{rgb}{0.0,0.0,0.0}%
+  \setlength{\shadeboxrule}{1.5pt}%
+  \begin{cors}[#1]\hspace*{1mm}%
+}{\end{cors}}
+
+\newenvironment{summary}[1][]{%
+  \definecolor{shadethmcolor}{rgb}{1.0,1.0,1.0}%
+  \definecolor{shaderulecolor}{rgb}{0.0,0.0,0.0}%
+  \setlength{\shadeboxrule}{1.5pt}%
+  \begin{zuss}[#1]\hspace*{1mm}%
+}{\end{zuss}}
+
+\newenvironment{axiom}[1][]{%
+  \definecolor{shadethmcolor}{rgb}{1.0,1.0,1.0}%
+  \definecolor{shaderulecolor}{rgb}{0.0,0.0,0.0}%
+  \setlength{\shadeboxrule}{1.5pt}%
+  \begin{axioms}[#1]\hspace*{1mm}%
+}{\end{axioms}}
+
+ \typeout{ make ensuremath function to ensure mathmode}
+ \newcommand{\emath}[1]{\ensuremath{{#1}}\xspace}
+
+ \newcommand{\DT}[1]{\emath{\mathrm{DT}\nbrack{#1}}}
+ \newcommand{\rD}{\emath{\textrm{3D}}}
+ \newcommand{\wD}{\emath{\textrm{2D}}}
+ \renewcommand{\th}{\emath{^{\textrm{th}}}}
+
+ % Number of cameras
+ \newcommand{\Nc}{\emath{N_c}}
+
+ % Number of DoFs
+ \newcommand{\Nd}{\emath{N_d}}
+
+ % Number of detected image features
+ \newcommand{\Nf}{\emath{N_f}}
+
+ % Number of edge orientations
+ \newcommand{\No}{\emath{N_o}}
+
+ % Point in camera coordinates
+ \newcommand{\camPt}{\emath{\vec{P}}}
+ \newcommand{\camPti}[1]{\emath{\vec{P}_{#1}}}
+
+ % Measured point in camera coordinates
+ \newcommand{\msdCamPt}{\emath{\tilde{\vec{P}}}}
+
+ % Point in image coordinates
+ \newcommand{\imgPt}{\emath{\vec{p}}}
+ \newcommand{\imgPti}[1]{\emath{\vec{p}_{#1}}}
+
+ % Measured point in image coordinates
+ \newcommand{\msdPt}{\emath{\tilde{\vec{p}}}}
+ \newcommand{\msdPti}[1]{\emath{\tilde{\vec{p}}_{#1}}}
+
+ % Optimisation result
+ \newcommand{\optRes}{\emath{\tilde{\vec{\Phi}}}}
+
+ % Optimisation parameter
+ \newcommand{\optPrm}{\emath{\vec{\Phi}}}
+ \newcommand{\optPrmi}[1]{\emath{\vec{\Phi}^{#1}}}
+
+ % Quantised optimisation parameter
+ \newcommand{\optQnt}{\emath{\lfloor\optPrm\rfloor}}
+ \newcommand{\optQnti}[1]{\emath{{\lfloor\optPrm\rfloor}^{#1}}}
+
+ % Camera parameter
+ \newcommand{\camPrm}{\emath{\kappa}}
+
+ % Estimated camera parameter
+ \newcommand{\camCal}{\emath{\tilde{\kappa}}}
+
+ % Pose
+ \newcommand{\pose}{\emat{\vec{\Phi}}}
+ \newcommand{\poseCmp}[1]{\emath{\Phi_{#1}}}
+
+ % Model
+ \newcommand{\model}{\emath{\mathcal{M}}}
+
+ % Template
+ \newcommand{\templ}{T}
+
+ % Template set
+ \newcommand{\templSet}{\emath{\mathcal{T}}}
+
+ % Lattice limits
+ \newcommand{\latMin}{\emath{\underline{\vec{\Lambda}}}}
+ \newcommand{\latMini}[1]{\emath{\underline{\Lambda}_{#1}}}
+ \newcommand{\latMax}{\emath{\overline{\vec{\Lambda}}}}
+ \newcommand{\latMaxi}[1]{\emath{\overline{\Lambda}_{#1}}}
+
+ % CCD density parameters
+ \newcommand{\ccdMu}{\emath{{\vec{\mu}}_{\optPrm}}}
+ \newcommand{\ccdSigma}{\emath{{\mat{\Sigma}}_{\optPrm}}}
+ \newcommand{\ccdMuPrior}{\emath{\vec{\mu}_{\optPrm}^{0}}}
+ \newcommand{\ccdSigmaPrior}{\emath{\mat{\Sigma}_{\optPrm}^{0}}}
+
+ % CCD curve normal
+ \newcommand{\ccdNs}{\emath{\vec{n}_s}}
+
+ \newcommand{\pratialdiff}[2]{\emath{\frac{\partial {#1}}{\partial {#2}}}}
+ \newcommand{\patialdiff}[2]{\emath{\frac{\partial {#1}}{\partial {#2}}}}
+
+ %%%%%%%%%%%%%%%%%%%%%%%%%%
+ % Gauß-Klammern
+ %%%%%%%%%%%%%%%%%%%%%%%%%%
+ \newcommand{\ceil}[1]{\emath{\lceil{#1}\rceil}}
+ \newcommand{\floor}[1]{\emath{\lfloor{#1}\rfloor}}
+
+ %%%%%%%%%%%%%%%%%%%%%%%%%%
+ % Average Operator (analog zu min, max)
+ %%%%%%%%%%%%%%%%%%%%%%%%%%
+ \def\avg{\emath{\mathop{\mathgroup\symoperators avg}}}
+
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% tools %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \newcommand{\rowvector}[2]{%
+   \emath{\begin{pmatrix}#1\\#2\end{pmatrix}}
+ }
+ \newcommand{\rowvectorT}[2]{\emath{\left(#1,#2\right)^t}}
+
+ \newcommand{\rowvectorthree}[3]{\emath{\begin{pmatrix}#1\\#2\\#3\end{pmatrix}}}
+ \newcommand{\rowvectorthreeT}[3]{\emath{\left( #1 #2 #3\right)^t}}
+
+ \newcommand{\rowvectorfour}[4]{\emath{\begin{pmatrix}#1\\#2\\#3\\#4\end{pmatrix}}}
+
+ % Scalar product
+ \newcommand{\scp}[2]{\emath{\left<#1,#2\right>}}
+
+ \newcommand{\minop}[2]{\emath{\mathop{\mathrm{#1}}\limits_{#2}\},}}
+
+ \newcommand{\sgn}[1]{\emath{\mathop{\mathrm{sgn}{#1}}}}
+ \newcommand{\argmin}[1]{\emath{\minop{arg min}{#1}}}
+ \newcommand{\minn}[1]{\emath{\minop{min}{#1}}}
+ \newcommand{\maxx}[1]{\emath{\minop{max}{#1}}}
+ \newcommand{\maxquant}[1]{\emath{\minop{max quant}{#1}}}
+
+ \newcommand{\df}[2]{\emath{{\frac{\partial{}{#1}}{\partial{}{#2}}}}}
+ \newcommand{\dR}[2]{\emath{\df{\trans{#1}{#2}{R}}{\trans{#1}{#2}{\omega}}}}
+
+ \newcommand{\nbrack}[1]{\emath{\left(#1\right)}}
+ \newcommand{\sbrack}[1]{\emath{\left[#1\right]}}
+ \newcommand{\cbrack}[1]{\emath{\left\{#1\right\}}}
+ \newcommand{\abrack}[1]{\emath{\left<#1\right>}}
+
+ \typeout{ mathsymbols }
+ \newcommand{\degree}{\emath{^{\circ}}}
+ \newcommand{\reel}{\in\mathbbm{R} }
+ \newcommand{\reelt}{\in\mathbbm{R}^{3\times 3} }
+ \newcommand{\reeltu}[1]{\in\mathbbm{R}^{3\times 3}_{#1} }
+ \newcommand{\reeln}[1]{\in\mathbbm{R}^{#1} }
+ \newcommand{\compln}[1]{\in\mathbbm{C}^{#1} }
+
+ \newcommand{\reeldimn}[1]{\emath{\mathbbm{R}^{#1}}}
+ \newcommand{\compldimn}[1]{\emath{\mathbbm{C}^{#1}}}
+
+ \newcommand{\ident}{\emath{\mathbb{1}}}
+
+ \newcommand{\La}{\emath{\mathcal{L}^1}}
+ \newcommand{\Lb}{\emath{\mathcal{L}^2}}
+
+ \newcommand{\landau}[1]{\emath{\mathcal{O}(#1)}}%landau
+
+ % Evaluate #1 at position #2
+ \newcommand{\atpos}[2]{\emath{\left.{#1}\right|_{#2}}}
+
+ \typeout{ tools }
+ \newcommand{\mat}[1]{\emath{\vec{#1}}}
+
+ %%%%%%%%%%%%%%%%%%% rotation matrix
+ \newcommand{\rotmat}{\emath{\begin{bmatrix}
+       \cos{\alpha}\cos{\beta} & \cos{\alpha}\sin{\beta}\sin{\gamma}-\sin{\alpha}\cos{\gamma} & \cos{\alpha}\sin{\beta}\cos{\gamma}+\sin{\alpha}\sin{\gamma}\\
+       \sin{\alpha}\cos{\beta} & \sin{\alpha}\sin{\beta}\sin{\gamma}+\cos{\alpha}\cos{\gamma} & \sin{\alpha}\sin{\beta}\cos{\gamma}-\cos{\alpha}\sin{\gamma}\\
+       -\sin{\beta} & \cos{\beta}\sin{\gamma} & \cos{\beta}\cos{\gamma}
+     \end{bmatrix}}}
+
+
+ \typeout{**** End Math Environemt **** }
+ \typeout{***** **** **** **** ****}
+\fi
 
 %% ---------------- end of usepackages -------------
-
-%german Option 
-%\newif\ifuseGerman\useGerman
-%\DeclareOption{usegerman}{\@useGerman}
-%%----- nun ngerman laden
-%\ifuseGerman\RequirePackage{ngerman}\fi
-%\RequirePackage{ngerman}[1998/07/08] % (V2.5e) Neue Rechtschreibung!
-%\usepackage[T1]{fontenc}      % T1-encoded fonts: auch Wörter mit Umlauten trennen
-
 
 \setcounter{secnumdepth}{3} % Numerierung auch für \subsubsection
 \setcounter{tocdepth}{3}    % nimm auch \subsubsections ins Inhaltsverz. auf
@@ -146,11 +428,15 @@ section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
 \newcommand{\ifnotdraftelse}[2]{\ifx\@draft\@undefined #1 \else #2 \fi}
 
 %% Seitengröße mit geometry-Paket einstellen
-\geometry{left=3cm,right=3cm,top=23mm,bottom=25mm,head=14.5pt}
+\geometry{left=3cm,
+	  right=3cm,
+	  top=23mm,
+	  bottom=25mm,
+	  head=14.5pt}
 
 %% Stil
 \parindent 0cm                     % Absatzanfang wird nicht eingerückt
-\parskip1.5ex plus0.5ex minus0.5ex % Abstand zwischen zwei Absätzen
+\parskip 1.5ex plus 0.5ex minus 0.5ex % Abstand zwischen zwei Absätzen
 
 % \newcommand{\headfont}{\fontfamily{ppl}\selectfont}
 % \newcommand{\headfont}{\sffamily}
@@ -158,78 +444,66 @@ section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
 % \newcommand{\captionfont}{}
 % \newcommand{\chapterheadfont}{}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Headings
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Geaenderte Headings:
-%% Seitenzahl normal, Text in slanted und nicht in Grossbuchstaben
-%%
-%------Linien------
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Einstellungen für Kopf- und Fußzeile ändern %%%%%%
+%% Ich lasse das mal drin, um zu zeigen, dass es auch damit funktioniert.
+%% Es geht aber genauso auch ohne scrpage2.
+%\RequirePackage{scrpage2}
+
+\clearscrheadfoot% Löscht vorige Einstellungen für Kopf und Fuß
+\pagestyle{scrheadings}% Neuer Seitenstil
 \setheadsepline{.5pt}
 \setfootsepline{.5pt}
-\pagestyle{scrheadings}
-
-
- % - Part Beginn - %
-% \newcommand\TeilnummerAusgeschrieben{% Wird übergeben an \partformat, sodass es zB "Erster Teil" heißt.
-%                                             \ifthenelse{\value{part}=1}{first}{%
-%                                             \ifthenelse{\value{part}=2}{second}{%
-%                                             \ifthenelse{\value{part}=3}{third}{%
-%                                             \ifthenelse{\value{part}=4}{fourth}{%
-%                                             \ifthenelse{\value{part}=5}{fifth}{%
-%                                             \ifthenelse{\value{part}=6}{sixth}{%
-%                                           {\typeout{to much}}}}}}}}}
-% \renewcommand*{\partformat}{\fontsize{15pt}{\topskip}\selectfont\TeilnummerAusgeschrieben~\partname:\enskip} %im Vgl. zu KOMA Klasse autodot entfernt und Darstellung geändert. Es heißt jetzt zB "Erster Teil".
-% \addtokomafont{part}{\fontsize{15pt}{\topskip}\selectfont}   %Schriftgröße Part-Überschrift
-% \let\partheadmidvskip\relax  %\partheadmidvskip "geleert", damit alles in einer Zeile erscheint.
-% \let\partheademptypage\relax %\partheademptypage geleert, damit nach der Titelüberschrift keine Leerseite eingefügt wird
-% \renewcommand{\raggedpart}{\raggedright}   %Teileüberschrift linksbündig statt zentriert
-% \renewcommand*{\partheadstartvskip}{%  
-% \vspace{0pt}}% 
-% \renewcommand*{\partheadendvskip}{%       
-% \vspace{0pt}} 
-% \setkomafont{partentry}{\usekomafont{disposition}}
- 
-% \makeatletter
-%   \let\@endpart
-% \makeatother
-% \makeatletter
-% \let\partbackup\l@part
-% \renewcommand*\l@part[2]{\partbackup{#1}{}}
-% \makeatother
-% \makeatletter
-% \renewcommand*\l@part{\@dottedtocline{-1}{0em}{5em}}
-% \makeatother
-
-
-%############################## Header and footer ##############################
-% class scrbook
-\pagestyle{scrheadings}
-%\ifoot[\tiny\RCSId\\\tiny ]{\tiny\RCSId\\\tiny} 
-\ifoot[]{} 
-\ofoot[]{}
-\cfoot[\pagemark]{\pagemark}
-
-\ifnum 0 = 1
-\newcommand{\HAVEVRMLTOEPS}[1]{#1}
-\else
-\newcommand{\HAVEVRMLTOEPS}[1]{}
-\fi
-%
-\newcolumntype{d}[1]{D{.}{.}{#1}}
-
-\renewcommand{\caplabelfont}{\normalfont\bfseries}
-\setcapindent{0em}
-\setcounter{secnumdepth}{3}
-\setlength\parskip{\medskipamount}
-\setlength\parindent{0pt}
+\ihead{\headmark}% Kolumnentitel oben, innen:
+                   % Kapitel auf geraden Seiten
+                   % Abschnitt auf ungeraden Seiten
+\ohead[\pagemark]{\pagemark}
+%\ofoot[\pagemark]{\pagemark}% Seitenzahl center
+\setheadsepline{0.4pt}% Linie unter Kopfzeile
 \onehalfspacing
-%
-%\newcommand{\settocdepth}[1]{\addtocontents{toc}{\protect\setcounter{tocdepth}{#1}}}
+
+\newcommand{\settocdepth}[1]{\addtocontents{toc}{\protect\setcounter{tocdepth}{#1}}}
 
 \AtBeginDocument{
   \renewcommand{\labelitemi}{\normalfont\bfseries{--}}
 }
+ % - Part Beginn - %
+\makeatletter
+
+\renewcommand\part{%\if@openright\cleardoublepage\else\clearpage\fi
+                  \thispagestyle{\partpagestyle}
+                  \if@twocolumn
+                      \onecolumn
+                      \@tempswatrue
+                    \else
+                      \@tempswafalse
+                  \fi
+		  \rule{1.0\textwidth}{1.0pt}\newline
+		  \vskip-\baselineskip\nobreak%
+                  \secdef\@part\@spart}
+
+\renewcommand*{\@endpart}{\vbox to\z@{\use@preamble{part@u}\vss}%
+  \rule{1.0\textwidth}{1.0pt}
+  \partheadendvskip
+  \partheademptypage
+  \if@tempswa
+    \twocolumn
+  \fi
+  \partheadendvskip
+  \setcounter{chapter}{0}
+}
+
+\makeatother
+
+% - chapter Beginn - %
+\makeatletter
+\renewcommand\chapter{\noindent\if@openright\hspace{0mm}\else\hspace{0mm}\fi
+\newpage
+  \thispagestyle{\chapterpagestyle}%
+  \global\@topnum\z@
+  \@afterindentfalse
+  \secdef\@chapter\@schapter}
+\makeatother
 
 %########################### setup float positioning ###########################
 \renewcommand{\topfraction}{0.9}
@@ -256,15 +530,8 @@ section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
 \newcommand{\algoref}[1]{Algorithm~\ref{#1}}
 \newcommand{\appref}[1]{Appendix~\ref{#1}}
 
-\newcommand{\rD}{3D}
-\newcommand{\wD}{2D}
-
 \newcommand{\wrt}{with respect to}
-\renewcommand{\th}{$^{\textrm{th}}$ }
 \newcommand{\wolog}{without loss of generality}
-\newcommand{\Wolog}{Without loss of generality}
-
-\newcommand{\DT}[1]{\mathrm{DT}\nbrack{#1}}
 
 % Segment subfigure
 \newcommand{\segsf}[3]{\subfigure[#1\label{#2}]{%
@@ -323,73 +590,13 @@ section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
 }
 \makeatother
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%	Math environemts
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newshadetheorem{thms}{Theorem}[chapter]
-\newshadetheorem{definitions}{Definition}[chapter]
-\newshadetheorem{cors}{Corollar}[chapter]
-\newshadetheorem{zuss}{Sammary}[chapter]
-\newshadetheorem{axioms}{Axiom}[chapter]
-\newshadetheorem{profs}{Proof}[chapter]
-
-\makeatletter
-\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
-  \hskip -\arraycolsep
-  \let\@ifnextchar\new@ifnextchar
-  \array{#1}}
-\makeatother
-
-\newenvironment{prof}[1][]{%
-  \definecolor{shadethmcolor}{rgb}{1.,1.,1.}%{.9,.9,.95}%
-  \definecolor{shaderulecolor}{rgb}{0.0,0.0,0.0}%
-  %\setlength{\shadeboxrule}{1.5pt}%
-  \begin{profs}[#1]\hspace*{1mm}%
-}{{\hfill\qed\vspace{1ex}}\end{profs}}
-
-\newenvironment{thm}[1][]{%
-  \definecolor{shadethmcolor}{rgb}{1.0,1.0,1.0}%{.9,.9,.95}%
-  \definecolor{shaderulecolor}{rgb}{0.0,0.0,0.0}%
-  \setlength{\shadeboxrule}{1.5pt}%
-  \begin{thms}[#1]\hspace*{1mm}%
-}{\end{thms}}
-
-\newenvironment{definition}[1][]{%
-  \definecolor{shadethmcolor}{rgb}{1.0,1.0,10.}%
-%  \definecolor{shadethmcolor}{rgb}{1.,1.,1.}% 
-  \definecolor{shaderulecolor}{rgb}{0.0,0.0,0.0}%
-  \setlength{\shadeboxrule}{1.5pt}%
-  \begin{definitions}[#1]\hspace*{1mm}%
-}{\end{definitions}}
-
-\newenvironment{corr}[1][]{%
-  \definecolor{shadethmcolor}{rgb}{1.0,1.0,1.0}%
-  \definecolor{shaderulecolor}{rgb}{0.0,0.0,0.0}%
-  \setlength{\shadeboxrule}{1.5pt}%
-  \begin{cors}[#1]\hspace*{1mm}%
-}{\end{cors}}
-
-\newenvironment{summary}[1][]{%
-  \definecolor{shadethmcolor}{rgb}{1.0,1.0,1.0}%
-  \definecolor{shaderulecolor}{rgb}{0.0,0.0,0.0}%
-  \setlength{\shadeboxrule}{1.5pt}%
-  \begin{zuss}[#1]\hspace*{1mm}%
-}{\end{zuss}}
-
-\newenvironment{axiom}[1][]{%
-  \definecolor{shadethmcolor}{rgb}{1.0,1.0,1.0}%
-  \definecolor{shaderulecolor}{rgb}{0.0,0.0,0.0}%
-  \setlength{\shadeboxrule}{1.5pt}%
-  \begin{axioms}[#1]\hspace*{1mm}%
-}{\end{axioms}}
-
 %%%%%%%%%%%%%%%%%%%%%%%
-% Kommentare 
+% Kommentare
 %%%%%%%%%%%%%%%%%%%%%%%
 \ifnotdraftelse{
 \newcommand{\Kommentar}[1]{}
 }{\newcommand{\Kommentar}[1]{{\em #1}}}
-% Alles innerhalb von \Hide{} oder \ignore{} 
+% Alles innerhalb von \Hide{} oder \ignore{}
 % wird von LaTeX komplett ignoriert (wie ein Kommentar)
 \newcommand{\Hide}[1]{}
 \let\ignore\Hide
@@ -401,7 +608,6 @@ section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
 \newcommand{\blankpage}{% Leerseite ohne Seitennummer, nächste Seite rechts
  \clearpage{\pagestyle{empty}\cleardoublepage}
 }
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 % Flattersatz rechts und Silbentrennung, Leerraum nach rechts maximal 1cm
@@ -421,7 +627,6 @@ section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
  \@centercr\@rightskip 0pt plus 1cm
 }
 \makeatother
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 % Tabellenspaltentypen (benoetigt colortbl)
@@ -452,14 +657,14 @@ section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % global scaling factor
 \def\gsf{0.9}
-%% Graphik, 
+%% Graphik,
 %% 3 Argumente: Datei, Label, Unterschrift
 \newcommand{\Abbildung}[3]{%
-\begin{figure}[tbh] %
-\centerline{\scalebox{\gsf}{\includegraphics*{#1}}} %
-\caption{#3} %
-\label{#2} %
-\end{figure} %
+	\begin{figure}[tbh] %
+	\centerline{\scalebox{\gsf}{\includegraphics*{#1}}} %
+	\caption{#3} %
+	\label{#2} %
+	\end{figure} %
 }
 \let\Abb\Abbildung
 
@@ -467,13 +672,13 @@ section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
 %% Graphik, skaliert, Angabe der Position
 %% 5 Argumente: Position, Breite (0 bis 1.0), Datei, Label, Unterschrift
 \newcommand{\Abbildungps}[5]{%
-\begin{figure}[#1]%
-\begin{center}
-\scalebox{\gsf}{\includegraphics*[width=#2\textwidth]{#3}}%
-\caption{#5}%
-\label{#4}%
-\end{center}
-\end{figure}%
+	\begin{figure}[#1]%
+	\begin{center}
+	\scalebox{\gsf}{\includegraphics*[width=#2\textwidth]{#3}}%
+	\caption{#5}%
+	\label{#4}%
+	\end{center}
+	\end{figure}%
 }
 \let\Abbps\Abbildungps
 
@@ -489,5 +694,91 @@ section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
 \end{figure}%
 }
 \let\Abbpf\Abbildungpf
+
+%% include Graphic with fixed size,
+%% @param Position
+%% @param path to file
+%% @param Label
+%% @param text
+\newcommand{\Abbildungfps}[4]{%
+	\begin{figure}[#1]%
+	\begin{center}
+	\scalebox{\gsf}{\includegraphics*[width=1.0\textwidth]{#2}}%
+	\caption{#3}%
+	\label{#4}%
+	\end{center}
+	\end{figure}%
+}
+\let\Abbps\Abbildungfps
+
+%make title functions
+\makeatletter
+\def\maketitle{
+%\renewcommand{\@maketitle}{
+%\newpage
+     \thispagestyle{empty}%
+      \ifx\@titlehead\@empty \else
+        \begin{minipage}[t]{\textwidth}%
+        \@titlehead
+        \end{minipage}\par
+      \fi
+ \null
+ \begin{center}%
+   \underline{\hspace{15cm}}
+	\vskip 3cm
+  		{\LARGE \@title \par}%
+	\vskip 3cm
+   \underline{\hspace{15cm}}
+   \vskip 3cm
+	{\large%start author table
+       \lineskip .5em%
+       \begin{tabular}[t]{c}%
+         \@author
+       \end{tabular}\par}%
+   \vskip 3cm
+   {\large {Dissertation} \par}%
+   \vskip 3em
+   {\large \@date \par}%
+ \end{center}%
+   \vfill
+  \null
+ % \cleardoublepage
+\newpage
+\par}
+\makeatother
+
+
+\newcommand{\cbox}[1]{\parbox[c][1.3cm]{3cm}{\centering{#1}}}
+\newcommand{\cfbox}[1]{\fbox{\parbox[c][1.3cm]{3cm}{\centering{#1}}}}
+\newcommand{\wcfbox}[1]{\fbox{\parbox[c][1.3cm]{9.7cm}{\centering{#1}}}}
+
+\newcommand{\trans}[3]{{}^{#1}_{#2}\hspace{-0.1em}#3\hspace{0.0em}}
+
+\newcommand{\TODO}[1]{*\marginpar{* TODO: #1}}
+\newcommand{\translate}[1]{{\bf \large #1\TODO{Translate #1}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Wortabkürzungen
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\eg{e.\,g.\ } %z.B. 'exempli gratia'
+\def\zb{e.\,g.\ }
+\def\ie{i.\,e.\ } %d.h. id est'
+\def\vi{vide\,infra\ }%siehe unten
+\def\su{vide\,infra\ }%siehe unten
+
+% Consistent index scheme: top left: Tgt coordinate system, bottom left: src
+% coordinate system, bottom right: point index
+\newcommand{\idx}[4]{{}^{#2}_{#3}\hspace{-0.1em}#1_{#4}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Index
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\indexen}[1]{\index{\MakeLowercase{#1}} \textit{#1}}%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Glossar
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\glos}[2]{\gls{#1} #2}
+
 
 %% **** END OF CLASS ****
