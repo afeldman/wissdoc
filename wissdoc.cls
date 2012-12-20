@@ -364,8 +364,7 @@ section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
  % CCD curve normal
  \newcommand{\ccdNs}{\emath{\vec{n}_s}}
 
- \newcommand{\pratialdiff}[2]{\emath{\frac{\partial {#1}}{\partial {#2}}}}
- \newcommand{\patialdiff}[2]{\emath{\frac{\partial {#1}}{\partial {#2}}}}
+ \newcommand{\partialdiff}[2]{\emath{\frac{\partial {#1}}{\partial {#2}}}}
 
  %%%%%%%%%%%%%%%%%%%%%%%%%%
  % Gauß-Klammern
@@ -506,23 +505,24 @@ section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
 \makeatletter
 
 \renewcommand\part{%\if@openright\cleardoublepage\else\clearpage\fi
-                  \thispagestyle{\partpagestyle}
-                  \if@twocolumn
-                      \onecolumn
-                      \@tempswatrue
-                    \else
-                      \@tempswafalse
-                  \fi
-		  \rule{1.0\textwidth}{1.0pt}\newline
-		  \vskip-\baselineskip\nobreak%
-                  \secdef\@part\@spart}
+  \newpage
+  \thispagestyle{\partpagestyle}
+  \if@twocolumn
+  \onecolumn
+   \@tempswatrue
+  \else
+   \@tempswafalse
+  \fi
+  \rule{1.0\textwidth}{1.0pt}\newline
+  \vskip-\baselineskip\nobreak%
+  \secdef\@part\@spart}
 
 \renewcommand*{\@endpart}{\vbox to\z@{\use@preamble{part@u}\vss}%
   \rule{1.0\textwidth}{1.0pt}
   \partheadendvskip
   \partheademptypage
   \if@tempswa
-    \twocolumn
+   \twocolumn
   \fi
   \partheadendvskip
   \setcounter{chapter}{0}
