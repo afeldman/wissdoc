@@ -17,22 +17,26 @@
 \ProvidesClass{wissdoc}[2012/10/25 Anton Feldmann - Wissenschaftliches Dokument]
 
 %% start options
-\newif\if@useMath% usepackages for mathamtics
-\newif\if@useGerman
+\newif\if@math% usepackages for mathamtics
+\newif\if@german
+\newif\if@draft
 
-%\@useMathfalse   %math option
-%\@useGermanfalse %german Option
-
-\def\useMath{\global\@useMathfalse}
-\def\useGerman{\global\@useGermanfalse}
+\def\math{\global\@mathtrue}
+\def\german{\global\@germanfalse}
 
 %option of wissdoc class
-\DeclareOption{math}{\global\@useMathtrue}
-\DeclareOption{fgerman}{\@useGermantrue}
+
+
 \DeclareOption{a4paper}{\PassOptionsToClass{a4paper}{srcbook}}
 \DeclareOption{twoside}{\PassOptionsToClass{twoside}{srcbook}}
 \DeclareOption{12pt}{\PassOptionsToClass{12pt}{scrbook}}
 \DeclareOption{titlepage}{\PassOptionsToClass{titlepage}{srcbook}}
+\DeclareOption{draft}{\PassOptionsToClass{draft}{srcbook}}
+\DeclareOption{draft}{\@drafttrue}
+\DeclareOption{final}{\@draftfalse}
+\DeclareOption{math}{\@mathtrue}
+\DeclareOption{nomath}{\@mathfalse}
+\DeclareOption{fgerman}{\@usegermantrue}
 \DeclareOption*{\ClassWarningNoLine{wissdoc}{Unknown option `\CurrentOption' specified for 'wissdoc' class}}
 %\ExecuteOptions{a4paper,12pt,twoside,titlepage}
 \ProcessOptions
@@ -43,7 +47,7 @@
 
 
 %% german language package
-\if@useGerman
+\if@german
       \RequirePackage{ngerman}
       \RequirePackage[utf8]{fontenc}      % T1-encoded fonts: auch Wörter mit Umlauten trennen
 \fi
@@ -189,10 +193,33 @@ section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
 \clubpenalty = 10000% Disable single lines at the start of a paragraph (Schusterjungen)
 \widowpenalty = 10000 \displaywidowpenalty = 10000% Disable single lines at the end of a paragraph (Hurenkinder)
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                   draft
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage{comment}
+\ifx\@draft
+
+ \RequirePackage[draft=true,allpages=true,fontfamily=cmr,angle=90,scale=0.2,mark={\fboxsep=35pt\fboxrule=0pt\relax\fbox{-- DRAFT -- }},
+ color=red!75!green!50,xcoord=-80,ycoord=-20]{draftmark}
+
+ \newcommand{\Kommentar}[1]{{\em #1}}}
+ \includecomment{dontshow}
+  \newcommand{\noshow}[2]{#1=#2 \if@draft #2=#1 \fi #1=#2}
+
+\else
+ \newcommand{\Kommentar}[1]{}
+ % Alles innerhalb von \Hide{} oder \ignore{}
+ % wird von LaTeX komplett ignoriert (wie ein Kommentar)
+ \newcommand{\Hide}[1]{}
+ \let\ignore\Hide
+
+ \excludecomment{dontshow}
+\fi
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %	             Math
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\if@useMath
+\if@math
  \typeout{***** **** **** **** ****}
  \typeout{***** use math ****}
  \typeout{***** start read packages ****}
@@ -436,10 +463,6 @@ section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
 \setcounter{secnumdepth}{3} % Numerierung auch für \subsubsection
 \setcounter{tocdepth}{3}    % nimm auch \subsubsections ins Inhaltsverz. auf
 
-%% New Commands
-\newcommand{\ifnotdraft}[1]{\ifx\@draft\@undefined #1 \fi}
-\newcommand{\ifnotdraftelse}[2]{\ifx\@draft\@undefined #1 \else #2 \fi}
-
 %% Seitengröße mit geometry-Paket einstellen
 \geometry{left=3cm,
 	  right=3cm,
@@ -603,16 +626,6 @@ section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
 }
 \makeatother
 
-%%%%%%%%%%%%%%%%%%%%%%%
-% Kommentare
-%%%%%%%%%%%%%%%%%%%%%%%
-\ifnotdraftelse{
-\newcommand{\Kommentar}[1]{}
-}{\newcommand{\Kommentar}[1]{{\em #1}}}
-% Alles innerhalb von \Hide{} oder \ignore{}
-% wird von LaTeX komplett ignoriert (wie ein Kommentar)
-\newcommand{\Hide}[1]{}
-\let\ignore\Hide
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
 % Leere Seite ohne Seitennummer, wird aber gezaehlt
