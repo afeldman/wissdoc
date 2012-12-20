@@ -196,6 +196,7 @@ section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
  \typeout{***** **** **** **** ****}
  \typeout{***** use math ****}
  \typeout{***** start read packages ****}
+
  \RequirePackage{bbm,amsfonts,amsmath,amscd,amssymb,shadethm,amsthm} %ams math bib
  \RequirePackage[all,color]{xy}
  \RequirePackage{leftidx}% write left index:
@@ -413,6 +414,14 @@ section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
        -\sin{\beta} & \cos{\beta}\sin{\gamma} & \cos{\beta}\cos{\gamma}
      \end{bmatrix}}}
 
+%
+%%left indeces
+%
+
+ \newcommand\leftidx[3]{%
+   {\vphantom{#2}}#1#2#3%
+ }
+ \newcommand{\ltrans}[1]{\leftidx{^\mathrm{t}}{\!#1}{}}
 
  \typeout{**** End Math Environemt **** }
  \typeout{***** **** **** **** ****}
