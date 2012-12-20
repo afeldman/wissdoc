@@ -199,7 +199,6 @@ section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
 
  \RequirePackage{bbm,amsfonts,amsmath,amscd,amssymb,shadethm,amsthm} %ams math bib
  \RequirePackage[all,color]{xy}
- \RequirePackage{leftidx}% write left index:
 
  \typeout{***** setup enviroments ****}
  \newshadetheorem{thms}{Theorem}[chapter]
