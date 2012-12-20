@@ -422,6 +422,11 @@ section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
  }
  \newcommand{\ltrans}[1]{\leftidx{^\mathrm{t}}{\!#1}{}}
 
+
+% Consistent index scheme: top left: Tgt coordinate system, bottom left: src
+% coordinate system, bottom right: point index
+ \newcommand{\idx}[4]{{}^{#2}_{#3}\hspace{-0.1em}#1_{#4}}
+
  \typeout{**** End Math Environemt **** }
  \typeout{***** **** **** **** ****}
 \fi
@@ -670,8 +675,8 @@ section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
 \newcommand{\Abbildung}[3]{%
 	\begin{figure}[tbh] %
 	\centerline{\scalebox{\gsf}{\includegraphics*{#1}}} %
-	\caption{#3} %
-	\label{#2} %
+	\caption{#2} %
+	\label{#3} %
 	\end{figure} %
 }
 \let\Abb\Abbildung
@@ -683,8 +688,8 @@ section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
 	\begin{figure}[#1]%
 	\begin{center}
 	\scalebox{\gsf}{\includegraphics*[width=#2\textwidth]{#3}}%
-	\caption{#5}%
-	\label{#4}%
+	\caption{#4}%
+	\label{#5}%
 	\end{center}
 	\end{figure}%
 }
@@ -696,8 +701,8 @@ section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
 \begin{figure}[#1]%
 \begin{center}
 \scalebox{\gsf}{\includegraphics*[#2]{#3}}%
-\caption{#5}%
-\label{#4}%
+\caption{#4}%
+\label{#5}%
 \end{center}
 \end{figure}%
 }
@@ -712,8 +717,8 @@ section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
 	\begin{figure}[#1]%
 	\begin{center}
 	\scalebox{\gsf}{\includegraphics*[width=1.0\textwidth]{#2}}%
-	\caption{#3}%
-	\label{#4}%
+	\caption{#4}%
+	\label{#5}%
 	\end{center}
 	\end{figure}%
 }
@@ -774,9 +779,6 @@ section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
 \def\vi{vide\,infra\ }%siehe unten
 \def\su{vide\,infra\ }%siehe unten
 
-% Consistent index scheme: top left: Tgt coordinate system, bottom left: src
-% coordinate system, bottom right: point index
-\newcommand{\idx}[4]{{}^{#2}_{#3}\hspace{-0.1em}#1_{#4}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 % Index
