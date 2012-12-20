@@ -717,8 +717,8 @@ section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
 	\begin{figure}[#1]%
 	\begin{center}
 	\scalebox{\gsf}{\includegraphics*[width=1.0\textwidth]{#2}}%
-	\caption{#4}%
-	\label{#5}%
+	\caption{#3}%
+	\label{#4}%
 	\end{center}
 	\end{figure}%
 }
