@@ -44,13 +44,6 @@
 %% start super class
 \LoadClass[toc=flat]{scrbook} % diese Klasse basiert auf ``scrbook''
 
-
-%% german language package
-\if@german
-      \RequirePackage{ngerman}
-      \RequirePackage[utf8]{fontenc}      % T1-encoded fonts: auch Wörter mit Umlauten trennen
-\fi
-
 \RequirePackage{ifthen}
 \RequirePackage{ifpdf}
 
@@ -782,15 +775,24 @@ section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
 \newcommand{\TODO}[1]{*\marginpar{* TODO: #1}}
 \newcommand{\translate}[1]{{\bf \large #1\TODO{Translate #1}}}
 
+
+%% german language package
+\if@german
+      \RequirePackage{ngerman}
+      \RequirePackage[utf8]{fontenc}      % T1-encoded fonts: auch Wörter mit Umlauten trennen
+
+\def\zb{z.\,B.\ } %z.B. 'exempli gratia'
+\def\dh{d.\,h.\ } %d.h. id est'
+\def\su{s.\,u.\ }%siehe unten
+\def\siu{siehe\,unten\ }%siehe unten
+\else
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 % Wortabkürzungen
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 \def\eg{e.\,g.\ } %z.B. 'exempli gratia'
-\def\zb{e.\,g.\ }
 \def\ie{i.\,e.\ } %d.h. id est'
 \def\vi{vide\,infra\ }%siehe unten
-\def\su{vide\,infra\ }%siehe unten
-
+\fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 % Index
