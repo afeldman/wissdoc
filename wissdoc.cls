@@ -31,12 +31,11 @@
 \DeclareOption{twoside}{\PassOptionsToClass{twoside}{srcbook}}
 \DeclareOption{12pt}{\PassOptionsToClass{12pt}{scrbook}}
 \DeclareOption{titlepage}{\PassOptionsToClass{titlepage}{srcbook}}
-\DeclareOption{draft}{\PassOptionsToClass{draft}{srcbook}}
 \DeclareOption{draft}{\@drafttrue}
 \DeclareOption{final}{\@draftfalse}
 \DeclareOption{math}{\@mathtrue}
 \DeclareOption{nomath}{\@mathfalse}
-\DeclareOption{fgerman}{\@usegermantrue}
+\DeclareOption{fgerman}{\@germantrue}
 \DeclareOption*{\ClassWarningNoLine{wissdoc}{Unknown option `\CurrentOption' specified for 'wissdoc' class}}
 %\ExecuteOptions{a4paper,12pt,twoside,titlepage}
 \ProcessOptions
@@ -202,7 +201,7 @@ section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
  \RequirePackage[draft=true,allpages=true,fontfamily=cmr,angle=90,scale=0.2,mark={\fboxsep=35pt\fboxrule=0pt\relax\fbox{-- DRAFT -- }},
  color=red!75!green!50,xcoord=-80,ycoord=-20]{draftmark}
 
- \newcommand{\Kommentar}[1]{{\em #1}}}
+ \newcommand{\Kommentar}[1]{{\em{#1}}}}
  \includecomment{dontshow}
   \newcommand{\noshow}[2]{#1=#2 \if@draft #2=#1 \fi #1=#2}
 
