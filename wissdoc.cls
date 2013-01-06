@@ -101,33 +101,6 @@ section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
 \definecolor{listingsbg}{rgb}{0.9,0.9,0.9}
 \definecolor{darkblue}{rgb}{0,0,.5}
 
-\hypersetup{
-      pdftoolbar=true,        % show Acrobat’s toolbar?
-      pdfmenubar=true,        % show Acrobat’s menu?
-      pdffitwindow=true,      % window fit to page when opened
-      pdfstartview={Fit},     % fits the width of the page to the window
-      pdftitle={Robust and Accurate Self Calibration of Stereo Camera Systems},    % title
-      pdfauthor={Anton Feldmann},     % author
-      pdfsubject={Accurate Calibration},   % subject of the document
-      pdfcreator={LiveTex},   % creator of the document
-      pdfproducer={Anton Feldmann}, % producer of the document
-      pdfkeywords={epipolar geometrie, bundel adjustement, prediction bands}, % list of keywords
-      pdfnewwindow=true,      % links in new window
-      pdfborder={0 0 0.5},
-      colorlinks=true,        % false: boxed links; true: colored links
-      linkcolor=darkblue,     % color of internal links
-      citecolor=blue,         % color of links to bibliography
-      filecolor=magenta,      % color of file links
-      urlcolor=darkblue,
-      unicode=true,           % non-Latin characters in Acrobat’s bookmarks
-      breaklinks=true,
-      menucolor=darkblue,
-      plainpages=false,       % correct hyperlinks
-      bookmarksopen=true,
-      bookmarksnumbered=true,
-      raiselinks=true,%
-}
-
 \RequirePackage{bookmark}[2007/02/20]
 
 \RequirePackage{float} %for floatting point environemts %Das Paket \usepackage{float} ergänzt die Positionierungsangeben für bewegliche Objekte (h, t, p ...) um die Variante H, die die Positionierung am exakt selben Ort wie im tex-Skript erzwingt.
@@ -171,6 +144,8 @@ section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
 \RequirePackage{shadow} % für schattierte Boxen etc.
 \RequirePackage{placeins}
 
+\RequirePackage{pgfplots}
+
 %%% PSTricks for PDFLatex
 %%drawings packages pdf/ps
 \ifpdf
@@ -202,7 +177,7 @@ section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
 
  \newcommand{\Kommentar}[1]{{\em{#1}}}}
  \includecomment{dontshow}
-  \newcommand{\noshow}[2]{#1=#2 \if@draft #2=#1 \fi #1=#2}
+ \newcommand{\noshow}[2]{#1=#2 \if@draft #2=#1 \fi #1=#2}
 
 \else
  \newcommand{\Kommentar}[1]{}
@@ -417,7 +392,7 @@ section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
  \newcommand{\reeldimn}[1]{\emath{\mathbbm{R}^{#1}}}
  \newcommand{\compldimn}[1]{\emath{\mathbbm{C}^{#1}}}
 
- \newcommand{\ident}{\emath{\mathbb{1}}}
+ \newcommand{\ident}{\emath{\mathbbm{1}}}
 
  \newcommand{\La}{\emath{\mathcal{L}^1}}
  \newcommand{\Lb}{\emath{\mathcal{L}^2}}
@@ -563,9 +538,6 @@ section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
 \newcommand{\tabref}[1]{Table~\ref{#1}}
 \newcommand{\algoref}[1]{Algorithm~\ref{#1}}
 \newcommand{\appref}[1]{Appendix~\ref{#1}}
-
-\newcommand{\wrt}{with respect to}
-\newcommand{\wolog}{without loss of generality}
 
 % Segment subfigure
 \newcommand{\segsf}[3]{\subfigure[#1\label{#2}]{%
@@ -801,5 +773,7 @@ section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
 \def\eg{e.\,g.\ } %z.B. 'exempli gratia'
 \def\ie{i.\,e.\ } %d.h. id est'
 \def\vi{siehe\,unten\ }%siehe unten
+\newcommand{\wrt}{with\,respect\,to\ }
+\newcommand{\wolog}{Without\,loss\,of\,generality\ }
 
 %% **** END OF CLASS ****
