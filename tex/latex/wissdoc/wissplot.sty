@@ -148,3 +148,11 @@
 	\end{figure}%
 }
 \let\Abbps\Abbildungfps
+
+
+% Segment subfigure
+\newcommand{\segsf}[3]{\subfigure[#1\label{#2}]{%
+\begin{tabular}{c}%
+\includegraphics[width=0.44\columnwidth]{#3}%
+\end{tabular}%
+}}

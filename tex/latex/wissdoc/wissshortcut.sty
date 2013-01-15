@@ -1,0 +1,50 @@
+%%
+%% Copyright (C) 2013 anton Feldmann
+%%
+%%Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+%%
+%%The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+%%
+%%THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%%
+%%
+%% Autor: Anton Feldmann anton.feldmann@gmail.com
+%% --
+%%
+
+%%
+%% std abkuerzungen
+%%
+
+\def\zb{z.\,B.\ } %z.B. 'exempli gratia'
+\def\dh{d.\,h.\ } %d.h. id est'
+\def\su{s.\,u.\ }% siehe unten
+\def\eg{e.\,g.\ } %z.B. 'exempli gratia'
+\def\ie{i.\,e.\ } %d.h. id est'
+\def\vi{siehe\,unten\ }%siehe unten
+
+
+\newcommand{\wrt}{with\,respect\,to\ }
+\newcommand{\wolog}{Without\,loss\,of\,generality\ }
+\newcommand{\Mo}{Multiocular}
+\newcommand{\mo}{multiocular}
+
+\newcommand{\defref}[1]{Def.~\ref{#1}}
+\newcommand{\partref}[1]{Part~\ref{#1}}
+\newcommand{\chpref}[1]{Chap.~\ref{#1}}
+\newcommand{\secref}[1]{Sec.~\ref{#1}}
+\newcommand{\equref}[1]{Eq.~\eqref{#1}}
+\newcommand{\figref}[1]{Fig.~\ref{#1}}
+\newcommand{\tabref}[1]{Table~\ref{#1}}
+\newcommand{\algoref}[1]{Algorithm~\ref{#1}}
+\newcommand{\appref}[1]{Appendix~\ref{#1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Index
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\indexen}[1]{\index{\MakeLowercase{#1}} \textit{#1}}%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Glossar
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\glos}[2]{\gls{#1} #2}

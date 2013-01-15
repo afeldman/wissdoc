@@ -64,9 +64,8 @@
 % litrature package
 \RequirePackage{natbib}
 
+%wisspackage
 \RequirePackage{wissplot}
-
-% drawings package
 \RequirePackage{wisscolor}
 \RequirePackage{wisstap}
 
@@ -98,14 +97,7 @@ section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
 
 \RequirePackage{float} %for floatting point environemts %Das Paket \usepackage{float} ergänzt die Positionierungsangeben für bewegliche Objekte (h, t, p ...) um die Variante H, die die Positionierung am exakt selben Ort wie im tex-Skript erzwingt.
 
-%\usepackage[T1]{fontenc}
-
 \RequirePackage{wissplot}
-
-%% Schusterjungen und Hurenkinder verhindern.
-%% Siehe deutsches TeX-FAQ (6.1.3)
-\clubpenalty = 10000% Disable single lines at the start of a paragraph (Schusterjungen)
-\widowpenalty = 10000 \displaywidowpenalty = 10000% Disable single lines at the end of a paragraph (Hurenkinder)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                   draft
@@ -139,8 +131,9 @@ section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
 
 %% ---------------- end of usepackages -------------
 
+
 \setcounter{secnumdepth}{3} % Numerierung auch für \subsubsection
-\setcounter{tocdepth}{3}    % nimm auch \subsubsections ins Inhaltsverz. auf
+\setcounter{tocdepth}{2}    % nimm auch \subsubsections ins Inhaltsverz. auf
 
 %% Seitengröße mit geometry-Paket einstellen
 \geometry{left=3cm,
@@ -153,17 +146,10 @@ section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
 \parindent 0cm                     % Absatzanfang wird nicht eingerückt
 \parskip 1.5ex plus 0.5ex minus 0.5ex % Abstand zwischen zwei Absätzen
 
-% \newcommand{\headfont}{\fontfamily{ppl}\selectfont}
-% \newcommand{\headfont}{\sffamily}
-% \newcommand{\headfont}{\slshape}
-% \newcommand{\captionfont}{}
-% \newcommand{\chapterheadfont}{}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Einstellungen für Kopf- und Fußzeile ändern %%%%%%
 %% Ich lasse das mal drin, um zu zeigen, dass es auch damit funktioniert.
 %% Es geht aber genauso auch ohne scrpage2.
-%\RequirePackage{scrpage2}
 
 \clearscrheadfoot% Löscht vorige Einstellungen für Kopf und Fuß
 \pagestyle{scrheadings}% Neuer Seitenstil
@@ -233,29 +219,6 @@ section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
 \newcommand{\defsec}[1]{\section{#1%
 }\vspace{-3ex}}
 
-\newcommand{\Mo}{Multiocular}
-\newcommand{\mo}{multiocular}
-
-\newcommand{\defref}[1]{Def.~\ref{#1}}
-\newcommand{\partref}[1]{Part~\ref{#1}}
-\newcommand{\chpref}[1]{Chap.~\ref{#1}}
-\newcommand{\secref}[1]{Sec.~\ref{#1}}
-\newcommand{\equref}[1]{Eq.~\eqref{#1}}
-\newcommand{\figref}[1]{Fig.~\ref{#1}}
-\newcommand{\tabref}[1]{Table~\ref{#1}}
-\newcommand{\algoref}[1]{Algorithm~\ref{#1}}
-\newcommand{\appref}[1]{Appendix~\ref{#1}}
-
-% Segment subfigure
-\newcommand{\segsf}[3]{\subfigure[#1\label{#2}]{%
-\begin{tabular}{c}%
-\includegraphics[width=0.44\columnwidth]{#3}%
-\end{tabular}%
-}}
-
-
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%
 % Leere Seite ohne Seitennummer, wird aber gezaehlt
 %%%%%%%%%%%%%%%%%%%%%%%%%
@@ -283,9 +246,6 @@ section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
 }
 \makeatother
 
-
-
-
 %make title functions
 \makeatletter
 \def\maketitle{
@@ -311,7 +271,7 @@ section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
          \@author
        \end{tabular}\par}%
    \vskip 3cm
-   {\large {Dissertation} \par}%
+   {\large {Diplomarbeit} \par}%
    \vskip 3em
    {\large \@date \par}%
  \end{center}%
@@ -322,7 +282,6 @@ section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
 \par}
 \makeatother
 
-
 \newcommand{\cbox}[1]{\parbox[c][1.3cm]{3cm}{\centering{#1}}}
 \newcommand{\cfbox}[1]{\fbox{\parbox[c][1.3cm]{3cm}{\centering{#1}}}}
 \newcommand{\wcfbox}[1]{\fbox{\parbox[c][1.3cm]{9.7cm}{\centering{#1}}}}
@@ -331,28 +290,5 @@ section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
 
 \newcommand{\TODO}[1]{*\marginpar{* TODO: #1}}
 \newcommand{\translate}[1]{{\bf \large #1\TODO{Translate #1}}}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Index
-%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\indexen}[1]{\index{\MakeLowercase{#1}} \textit{#1}}%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Glossar
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\glos}[2]{\gls{#1} #2}
-
-%%
-%% std abkuerzungen
-%%
-
-\def\zb{z.\,B.\ } %z.B. 'exempli gratia'
-\def\dh{d.\,h.\ } %d.h. id est'
-\def\su{s.\,u.\ }%siehe unten
-\def\eg{e.\,g.\ } %z.B. 'exempli gratia'
-\def\ie{i.\,e.\ } %d.h. id est'
-\def\vi{siehe\,unten\ }%siehe unten
-\newcommand{\wrt}{with\,respect\,to\ }
-\newcommand{\wolog}{Without\,loss\,of\,generality\ }
 
 %% **** END OF CLASS ****

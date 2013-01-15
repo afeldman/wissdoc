@@ -13,19 +13,19 @@
 %%
 
 \typeout{***** **** **** **** ****}
- \typeout{***** use math ****}
- \typeout{***** start read packages ****}
+\typeout{***** use math ****}
+\typeout{***** start read packages ****}
+\typeout{NEED WissColor}
 
- \RequirePackage{bbm,amsfonts,amsmath,amscd,amssymb,shadethm,amsthm} %ams math bib
- \RequirePackage[all,color]{xy}
+\usepackage{bbm,amsfonts,amsmath,amscd,amssymb,shadethm,amsthm} %ams math bib
+\usepackage[all,color]{xy}
 
- \typeout{***** setup enviroments ****}
- \newshadetheorem{thms}{Theorem}[chapter]
- \newshadetheorem{definitions}{Definition}[chapter]
- \newshadetheorem{cors}{Corollar}[chapter]
- \newshadetheorem{zuss}{Sammary}[chapter]
- \newshadetheorem{axioms}{Axiom}[chapter]
- \newshadetheorem{profs}{Proof}[chapter]
+\newshadetheorem{thms}{Theorem}[chapter]
+\newshadetheorem{definitions}{Definition}[chapter]
+\newshadetheorem{cors}{Corollar}[chapter]
+\newshadetheorem{zuss}{Sammary}[chapter]
+\newshadetheorem{axioms}{Axiom}[chapter]
+\newshadetheorem{profs}{Proof}[chapter]
 
 \makeatletter
 \renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
@@ -200,7 +200,6 @@
  \newcommand{\cbrack}[1]{\emath{\left\{#1\right\}}}
  \newcommand{\abrack}[1]{\emath{\left<#1\right>}}
 
- \typeout{ mathsymbols }
  \newcommand{\degree}{\emath{^{\circ}}}
  \newcommand{\reel}{\in\mathbbm{R} }
  \newcommand{\reelt}{\in\mathbbm{R}^{3\times 3} }
@@ -245,5 +244,5 @@
 % coordinate system, bottom right: point index
  \newcommand{\idx}[4]{{}^{#2}_{#3}\hspace{-0.1em}#1_{#4}}
 
- \typeout{**** End Math Environemt **** }
- \typeout{***** **** **** **** ****}
+\typeout{**** End Math Environemt **** }
+
