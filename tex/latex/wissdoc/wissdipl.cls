@@ -68,6 +68,8 @@
 \RequirePackage{wissplot}
 \RequirePackage{wisscolor}
 \RequirePackage{wisstap}
+\RequirePackage{wissschuster}
+\RequirePackage{wissshortcut}
 
 %algorithm and listings
 \RequirePackage{listings}
