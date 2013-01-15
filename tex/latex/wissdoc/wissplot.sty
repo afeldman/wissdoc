@@ -1,0 +1,150 @@
+%%
+%% Copyright (C) 2013 anton Feldmann
+%%
+%%Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+%%
+%%The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+%%
+%%THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%%
+%%
+%% Autor: Anton Feldmann anton.feldmann@gmail.com
+%% --
+%%
+
+\typeout{***** laod plot ****}
+
+% other interesting packages:
+\usepackage{varioref}
+\usepackage{verbatim}
+\usepackage{subfigure}
+\usepackage{shadow} % für schattierte Boxen etc.
+\usepackage{placeins}
+
+\usepackage{pgfplots}
+
+%%% PSTricks for PDFLatex
+%%drawings packages pdf/ps
+\ifpdf
+  \usepackage{pstricks}
+%   \RequirePackage[dvips={-o -Ppdf},
+% 	      pspdf={-dAutoRotatePages=/None},
+% 	      pdfcrop={},
+% 	      cleanup={log,aux,dvi,ps,pdf},
+% 	      latex={-interaction=nonstopmode},
+% 	      final]{auto-pst-pdf}%set "-shell-escape in pdflatex options"
+  \usepackage{pst-pdf}
+\else
+  \usepackage{pstricks}
+\fi
+
+\typeout{***** plot environment functions ****}
+
+%================= Add a shaded background to floating figures =================
+\makeatletter
+\newenvironment{myfloatingfigure}[2][v]%
+{\@tfor \@tempa :=#1\do
+         {\if\@tempa r\global\oddpagestrue\fi
+          \if\@tempa l\global\oddpagesfalse\fi
+          \if\@tempa p%
+              \ifodd\c@page\global\oddpagestrue
+                \else\global\oddpagesfalse\fi
+          \fi
+          \if\@tempa v%
+             \ifnum\theOptionTest=0
+                 \ifodd\c@page\global\oddpagestrue
+                   \else\global\oddpagesfalse\fi
+             \else
+                  \ifodd\theOptionTest\global\oddpagestrue
+                    \else\global\oddpagesfalse\fi
+             \fi
+          \fi
+         }
+ \expandafter\ifx\csname oldoutput\endcsname\relax% ref. TeXbook Ex.7.7
+    \PackageError{floatflt}{The `floatflt' package is not initialized}
+     {Try to reinstall the `floatflt' package.\MessageBreak
+      Type `x' to quit or <Return> to try to go on.}\@@end\fi
+ \global\everypar={\tryfig\oldeverypar}% must be set globally!
+ \global\advance\ffigcount by 1
+ \iffigprocessing
+    {\count0=\ffigcount\advance\count0 by -1
+     \PackageWarningNoLine{floatflt}{Floating figures \the\count0\space%
+       \space and \the\ffigcount\space colliding}%
+    }%
+ \fi
+ \iftabprocessing \PackageWarningNoLine{floatflt}{Floating figure %
+   \the\ffigcount\space and floating table \the\ftabcount\space colliding}
+ \fi
+ \def\@captype{figure}
+ \global\setlength{\floatfltwidth}{#2}
+ \global\figprocessingtrue
+ \setbox2=\vbox\bgroup% begin of figbox
+                               \hrule height 0pt width #2 depth 0pt%
+                               \hsize=#2%
+
+}
+{
+\egroup
+\global\setbox\figbox=\hbox{\colorbox[gray]{0.95}{\box2}}%
+\figinsert\par%
+}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Einbinden von Graphiken
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% global scaling factor
+\def\gsf{0.9}
+%% Graphik,
+%% 3 Argumente: Datei, Label, Unterschrift
+\newcommand{\Abbildung}[3]{%
+	\begin{figure}[tbh] %
+	\centerline{\scalebox{\gsf}{\includegraphics*{#1}}} %
+	\caption{#2} %
+	\label{#3} %
+	\end{figure} %
+}
+\let\Abb\Abbildung
+
+%% Abbps
+%% Graphik, skaliert, Angabe der Position
+%% 5 Argumente: Position, Breite (0 bis 1.0), Datei, Label, Unterschrift
+\newcommand{\Abbildungps}[5]{%
+	\begin{figure}[#1]%
+	\begin{center}
+	\scalebox{\gsf}{\includegraphics*[width=#2\textwidth]{#3}}%
+	\caption{#4}%
+	\label{#5}%
+	\end{center}
+	\end{figure}%
+}
+\let\Abbps\Abbildungps
+
+%% Graphik, Angabe der Position, frei wählbares Argument für includegraphics
+%% 5 Argumente: Position, Optionen, Datei, Label, Unterschrift
+\newcommand{\Abbildungpf}[5]{%
+\begin{figure}[#1]%
+\begin{center}
+\scalebox{\gsf}{\includegraphics*[#2]{#3}}%
+\caption{#4}%
+\label{#5}%
+\end{center}
+\end{figure}%
+}
+\let\Abbpf\Abbildungpf
+
+%% include Graphic with fixed size,
+%% @param Position
+%% @param path to file
+%% @param Label
+%% @param text
+\newcommand{\Abbildungfps}[4]{%
+	\begin{figure}[#1]%
+	\begin{center}
+	\scalebox{\gsf}{\includegraphics*[width=1.0\textwidth]{#2}}%
+	\caption{#3}%
+	\label{#4}%
+	\end{center}
+	\end{figure}%
+}
+\let\Abbps\Abbildungfps

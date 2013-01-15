@@ -1,0 +1,249 @@
+%%
+%% Copyright (C) 2013 anton Feldmann
+%%
+%%Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+%%
+%%The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+%%
+%%THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%%
+%%
+%% Autor: Anton Feldmann anton.feldmann@gmail.com
+%% --
+%%
+
+\typeout{***** **** **** **** ****}
+ \typeout{***** use math ****}
+ \typeout{***** start read packages ****}
+
+ \RequirePackage{bbm,amsfonts,amsmath,amscd,amssymb,shadethm,amsthm} %ams math bib
+ \RequirePackage[all,color]{xy}
+
+ \typeout{***** setup enviroments ****}
+ \newshadetheorem{thms}{Theorem}[chapter]
+ \newshadetheorem{definitions}{Definition}[chapter]
+ \newshadetheorem{cors}{Corollar}[chapter]
+ \newshadetheorem{zuss}{Sammary}[chapter]
+ \newshadetheorem{axioms}{Axiom}[chapter]
+ \newshadetheorem{profs}{Proof}[chapter]
+
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+
+\newenvironment{prof}[1][]{%
+  \definecolor{shadethmcolor}{rgb}{1.,1.,1.}%{.9,.9,.95}%
+  \definecolor{shaderulecolor}{rgb}{0.0,0.0,0.0}%
+  %\setlength{\shadeboxrule}{1.5pt}%
+  \begin{profs}[#1]\hspace*{1mm}%
+}{{\hfill\qed\vspace{1ex}}\end{profs}}
+
+\newenvironment{thm}[1][]{%
+  \definecolor{shadethmcolor}{rgb}{1.0,1.0,1.0}%{.9,.9,.95}%
+  \definecolor{shaderulecolor}{rgb}{0.0,0.0,0.0}%
+  \setlength{\shadeboxrule}{1.5pt}%
+  \begin{thms}[#1]\hspace*{1mm}%
+}{\end{thms}}
+
+\newenvironment{definition}[1][]{%
+  \definecolor{shadethmcolor}{rgb}{1.0,1.0,10.}%
+%  \definecolor{shadethmcolor}{rgb}{1.,1.,1.}%
+  \definecolor{shaderulecolor}{rgb}{0.0,0.0,0.0}%
+  \setlength{\shadeboxrule}{1.5pt}%
+  \begin{definitions}[#1]\hspace*{1mm}%
+}{\end{definitions}}
+
+\newenvironment{corr}[1][]{%
+  \definecolor{shadethmcolor}{rgb}{1.0,1.0,1.0}%
+  \definecolor{shaderulecolor}{rgb}{0.0,0.0,0.0}%
+  \setlength{\shadeboxrule}{1.5pt}%
+  \begin{cors}[#1]\hspace*{1mm}%
+}{\end{cors}}
+
+\newenvironment{summary}[1][]{%
+  \definecolor{shadethmcolor}{rgb}{1.0,1.0,1.0}%
+  \definecolor{shaderulecolor}{rgb}{0.0,0.0,0.0}%
+  \setlength{\shadeboxrule}{1.5pt}%
+  \begin{zuss}[#1]\hspace*{1mm}%
+}{\end{zuss}}
+
+\newenvironment{axiom}[1][]{%
+  \definecolor{shadethmcolor}{rgb}{1.0,1.0,1.0}%
+  \definecolor{shaderulecolor}{rgb}{0.0,0.0,0.0}%
+  \setlength{\shadeboxrule}{1.5pt}%
+  \begin{axioms}[#1]\hspace*{1mm}%
+}{\end{axioms}}
+
+ \typeout{ make ensuremath function to ensure mathmode}
+ \newcommand{\emath}[1]{\ensuremath{{#1}}\xspace}
+
+ \newcommand{\DT}[1]{\emath{\mathrm{DT}\nbrack{#1}}}
+ \newcommand{\rD}{\emath{\textrm{3D}}}
+ \newcommand{\wD}{\emath{\textrm{2D}}}
+ \renewcommand{\th}{\emath{^{\textrm{th}}}}
+
+ % Number of cameras
+ \newcommand{\Nc}{\emath{N_c}}
+
+ % Number of DoFs
+ \newcommand{\Nd}{\emath{N_d}}
+
+ % Number of detected image features
+ \newcommand{\Nf}{\emath{N_f}}
+
+ % Number of edge orientations
+ \newcommand{\No}{\emath{N_o}}
+
+ % Point in camera coordinates
+ \newcommand{\camPt}{\emath{\vec{P}}}
+ \newcommand{\camPti}[1]{\emath{\vec{P}_{#1}}}
+
+ % Measured point in camera coordinates
+ \newcommand{\msdCamPt}{\emath{\tilde{\vec{P}}}}
+
+ % Point in image coordinates
+ \newcommand{\imgPt}{\emath{\vec{p}}}
+ \newcommand{\imgPti}[1]{\emath{\vec{p}_{#1}}}
+
+ % Measured point in image coordinates
+ \newcommand{\msdPt}{\emath{\tilde{\vec{p}}}}
+ \newcommand{\msdPti}[1]{\emath{\tilde{\vec{p}}_{#1}}}
+
+ % Optimisation result
+ \newcommand{\optRes}{\emath{\tilde{\vec{\Phi}}}}
+
+ % Optimisation parameter
+ \newcommand{\optPrm}{\emath{\vec{\Phi}}}
+ \newcommand{\optPrmi}[1]{\emath{\vec{\Phi}^{#1}}}
+
+ % Quantised optimisation parameter
+ \newcommand{\optQnt}{\emath{\lfloor\optPrm\rfloor}}
+ \newcommand{\optQnti}[1]{\emath{{\lfloor\optPrm\rfloor}^{#1}}}
+
+ % Camera parameter
+ \newcommand{\camPrm}{\emath{\kappa}}
+
+ % Estimated camera parameter
+ \newcommand{\camCal}{\emath{\tilde{\kappa}}}
+
+ % Pose
+ \newcommand{\pose}{\emat{\vec{\Phi}}}
+ \newcommand{\poseCmp}[1]{\emath{\Phi_{#1}}}
+
+ % Model
+ \newcommand{\model}{\emath{\mathcal{M}}}
+
+ % Template
+ \newcommand{\templ}{T}
+
+ % Template set
+ \newcommand{\templSet}{\emath{\mathcal{T}}}
+
+ % Lattice limits
+ \newcommand{\latMin}{\emath{\underline{\vec{\Lambda}}}}
+ \newcommand{\latMini}[1]{\emath{\underline{\Lambda}_{#1}}}
+ \newcommand{\latMax}{\emath{\overline{\vec{\Lambda}}}}
+ \newcommand{\latMaxi}[1]{\emath{\overline{\Lambda}_{#1}}}
+
+ % CCD density parameters
+ \newcommand{\ccdMu}{\emath{{\vec{\mu}}_{\optPrm}}}
+ \newcommand{\ccdSigma}{\emath{{\mat{\Sigma}}_{\optPrm}}}
+ \newcommand{\ccdMuPrior}{\emath{\vec{\mu}_{\optPrm}^{0}}}
+ \newcommand{\ccdSigmaPrior}{\emath{\mat{\Sigma}_{\optPrm}^{0}}}
+
+ % CCD curve normal
+ \newcommand{\ccdNs}{\emath{\vec{n}_s}}
+
+ \newcommand{\partialdiff}[2]{\emath{\frac{\partial {#1}}{\partial {#2}}}}
+
+ %%%%%%%%%%%%%%%%%%%%%%%%%%
+ % Gauß-Klammern
+ %%%%%%%%%%%%%%%%%%%%%%%%%%
+ \newcommand{\ceil}[1]{\emath{\lceil{#1}\rceil}}
+ \newcommand{\floor}[1]{\emath{\lfloor{#1}\rfloor}}
+
+ %%%%%%%%%%%%%%%%%%%%%%%%%%
+ % Average Operator (analog zu min, max)
+ %%%%%%%%%%%%%%%%%%%%%%%%%%
+ \def\avg{\emath{\mathop{\mathgroup\symoperators avg}}}
+
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% tools %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \newcommand{\rowvector}[2]{%
+   \emath{\begin{pmatrix}#1\\#2\end{pmatrix}}
+ }
+ \newcommand{\rowvectorT}[2]{\emath{\left(#1,#2\right)^t}}
+
+ \newcommand{\rowvectorthree}[3]{\emath{\begin{pmatrix}#1\\#2\\#3\end{pmatrix}}}
+ \newcommand{\rowvectorthreeT}[3]{\emath{\left( #1 #2 #3\right)^t}}
+
+ \newcommand{\rowvectorfour}[4]{\emath{\begin{pmatrix}#1\\#2\\#3\\#4\end{pmatrix}}}
+
+ % Scalar product
+ \newcommand{\scp}[2]{\emath{\left<#1,#2\right>}}
+
+ \newcommand{\minop}[2]{\emath{\mathop{\mathrm{#1}}\limits_{#2}\},}}
+
+ \newcommand{\sgn}[1]{\emath{\mathop{\mathrm{sgn}{#1}}}}
+ \newcommand{\argmin}[1]{\emath{\minop{arg min}{#1}}}
+ \newcommand{\minn}[1]{\emath{\minop{min}{#1}}}
+ \newcommand{\maxx}[1]{\emath{\minop{max}{#1}}}
+ \newcommand{\maxquant}[1]{\emath{\minop{max quant}{#1}}}
+
+ \newcommand{\df}[2]{\emath{{\frac{\partial{}{#1}}{\partial{}{#2}}}}}
+ \newcommand{\dR}[2]{\emath{\df{\trans{#1}{#2}{R}}{\trans{#1}{#2}{\omega}}}}
+
+ \newcommand{\nbrack}[1]{\emath{\left(#1\right)}}
+ \newcommand{\sbrack}[1]{\emath{\left[#1\right]}}
+ \newcommand{\cbrack}[1]{\emath{\left\{#1\right\}}}
+ \newcommand{\abrack}[1]{\emath{\left<#1\right>}}
+
+ \typeout{ mathsymbols }
+ \newcommand{\degree}{\emath{^{\circ}}}
+ \newcommand{\reel}{\in\mathbbm{R} }
+ \newcommand{\reelt}{\in\mathbbm{R}^{3\times 3} }
+ \newcommand{\reeltu}[1]{\in\mathbbm{R}^{3\times 3}_{#1} }
+ \newcommand{\reeln}[1]{\in\mathbbm{R}^{#1} }
+ \newcommand{\compln}[1]{\in\mathbbm{C}^{#1} }
+
+ \newcommand{\reeldimn}[1]{\emath{\mathbbm{R}^{#1}}}
+ \newcommand{\compldimn}[1]{\emath{\mathbbm{C}^{#1}}}
+
+ \newcommand{\ident}{\emath{\mathbbm{1}}}
+
+ \newcommand{\La}{\emath{\mathcal{L}^1}}
+ \newcommand{\Lb}{\emath{\mathcal{L}^2}}
+
+ \newcommand{\landau}[1]{\emath{\mathcal{O}(#1)}}%landau
+
+ % Evaluate #1 at position #2
+ \newcommand{\atpos}[2]{\emath{\left.{#1}\right|_{#2}}}
+
+ \typeout{ tools }
+ \newcommand{\mat}[1]{\emath{\vec{#1}}}
+
+ %%%%%%%%%%%%%%%%%%% rotation matrix
+ \newcommand{\rotmat}{\emath{\begin{bmatrix}
+       \cos{\alpha}\cos{\beta} & \cos{\alpha}\sin{\beta}\sin{\gamma}-\sin{\alpha}\cos{\gamma} & \cos{\alpha}\sin{\beta}\cos{\gamma}+\sin{\alpha}\sin{\gamma}\\
+       \sin{\alpha}\cos{\beta} & \sin{\alpha}\sin{\beta}\sin{\gamma}+\cos{\alpha}\cos{\gamma} & \sin{\alpha}\sin{\beta}\cos{\gamma}-\cos{\alpha}\sin{\gamma}\\
+       -\sin{\beta} & \cos{\beta}\sin{\gamma} & \cos{\beta}\cos{\gamma}
+     \end{bmatrix}}}
+
+%
+%%left indeces
+%
+
+ \newcommand\leftidx[3]{%
+   {\vphantom{#2}}#1#2#3%
+ }
+ \newcommand{\ltrans}[1]{\leftidx{^\mathrm{t}}{\!#1}{}}
+
+
+% Consistent index scheme: top left: Tgt coordinate system, bottom left: src
+% coordinate system, bottom right: point index
+ \newcommand{\idx}[4]{{}^{#2}_{#3}\hspace{-0.1em}#1_{#4}}
+
+ \typeout{**** End Math Environemt **** }
+ \typeout{***** **** **** **** ****}

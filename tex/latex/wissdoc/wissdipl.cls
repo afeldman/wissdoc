@@ -1,6 +1,6 @@
 %% LaTeX2e Formatklasse für die Diplomarbeit    -*-Mode: LaTeX;-*-
 %%
-%% Copyright (C) 2012 anton Feldmann
+%% Copyright (C) 2013 anton Feldmann
 %%
 %%Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 %%
@@ -42,7 +42,7 @@
 
 
 %% start super class
-\LoadClass[toc=flat]{scrbook} % diese Klasse basiert auf ``scrbook''
+\LoadClass{scrbook} % diese Klasse basiert auf ``scrbook''
 
 %% german language package
 \if@german
@@ -63,6 +63,8 @@
 
 % litrature package
 \RequirePackage{natbib}
+
+\RequirePackage{wissplot}
 
 % drawings package
 \RequirePackage{wisscolor}
@@ -96,61 +98,9 @@ section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
 
 \RequirePackage{float} %for floatting point environemts %Das Paket \usepackage{float} ergänzt die Positionierungsangeben für bewegliche Objekte (h, t, p ...) um die Variante H, die die Positionierung am exakt selben Ort wie im tex-Skript erzwingt.
 
-
-% Schriftart
-\RequirePackage{times}
-%\usepackage{palatino}
-%\usepackage{newcent}      %for sophisticated font style
-%\usepackage{helvet}
-%\renewcommand{\familydefault}{\sfdefault}
-%\usepackage{courier} \raggedright
-%\renewcommand{\familydefault}{\ttdefault}
-
-%Danach muss man die Standardschriftart setzen mit dem Befehl \fontfamily{abr}\selectfont, der für das gesamte restliche Dokument gilt, oder mit {\fontfamily{abr}\selectfont Some Text} um nur den eingeklammerten Bereich zu betreffen. abr ist die Abkürzung für die Schriftart. Die häufigsten sind ptm (Times), phv (Helvetica), pcr (Courier), pbk (Bookman), pag (Avant Garde), ppl (Palatino), bch (Charter), pnc (New Century Schoolbook), pzc (Zapf Chancery), put (Utopia ).
-
-% mathfonts
-%\usepackage{mathpazo}
-%\usepackage{euler}
-%\usepackage{cmbright}
-%\usepackage{ccfonts,eulervm}
-%\usepackage[math]{iwona}
-%\usepackage[math]{kurier}
-%\usepackage{kmath,kerkis}
-%\usepackage{millennial}
-%\usepackage{fouriernc}
-%\usepackage{pxfonts}
-%\usepackage{mathpple}
-%\usepackage{arev}
-%\usepackage[charter]{mathdesign}
-%\usepackage{comicsans}
-%\usepackage[garamond]{mathdesign}
-%\usepackage{fourier}
-
 %\usepackage[T1]{fontenc}
 
-% other interesting packages:
-\RequirePackage{varioref}
-\RequirePackage{verbatim}
-\RequirePackage{subfigure}
-\RequirePackage{shadow} % für schattierte Boxen etc.
-\RequirePackage{placeins}
-
-\RequirePackage{pgfplots}
-
-%%% PSTricks for PDFLatex
-%%drawings packages pdf/ps
-\ifpdf
-  \RequirePackage{pstricks}
-%   \RequirePackage[dvips={-o -Ppdf},
-% 	      pspdf={-dAutoRotatePages=/None},
-% 	      pdfcrop={},
-% 	      cleanup={log,aux,dvi,ps,pdf},
-% 	      latex={-interaction=nonstopmode},
-% 	      final]{auto-pst-pdf}%set "-shell-escape in pdflatex options"
-  \RequirePackage{pst-pdf}
-\else
-  \RequirePackage{pstricks}
-\fi
+\RequirePackage{wissplot}
 
 %% Schusterjungen und Hurenkinder verhindern.
 %% Siehe deutsches TeX-FAQ (6.1.3)
@@ -184,241 +134,7 @@ section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
 %	             Math
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \if@math
- \typeout{***** **** **** **** ****}
- \typeout{***** use math ****}
- \typeout{***** start read packages ****}
-
- \RequirePackage{bbm,amsfonts,amsmath,amscd,amssymb,shadethm,amsthm} %ams math bib
- \RequirePackage[all,color]{xy}
-
- \typeout{***** setup enviroments ****}
- \newshadetheorem{thms}{Theorem}[chapter]
- \newshadetheorem{definitions}{Definition}[chapter]
- \newshadetheorem{cors}{Corollar}[chapter]
- \newshadetheorem{zuss}{Sammary}[chapter]
- \newshadetheorem{axioms}{Axiom}[chapter]
- \newshadetheorem{profs}{Proof}[chapter]
-
-\makeatletter
-\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
-  \hskip -\arraycolsep
-  \let\@ifnextchar\new@ifnextchar
-  \array{#1}}
-\makeatother
-
-\newenvironment{prof}[1][]{%
-  \definecolor{shadethmcolor}{rgb}{1.,1.,1.}%{.9,.9,.95}%
-  \definecolor{shaderulecolor}{rgb}{0.0,0.0,0.0}%
-  %\setlength{\shadeboxrule}{1.5pt}%
-  \begin{profs}[#1]\hspace*{1mm}%
-}{{\hfill\qed\vspace{1ex}}\end{profs}}
-
-\newenvironment{thm}[1][]{%
-  \definecolor{shadethmcolor}{rgb}{1.0,1.0,1.0}%{.9,.9,.95}%
-  \definecolor{shaderulecolor}{rgb}{0.0,0.0,0.0}%
-  \setlength{\shadeboxrule}{1.5pt}%
-  \begin{thms}[#1]\hspace*{1mm}%
-}{\end{thms}}
-
-\newenvironment{definition}[1][]{%
-  \definecolor{shadethmcolor}{rgb}{1.0,1.0,10.}%
-%  \definecolor{shadethmcolor}{rgb}{1.,1.,1.}%
-  \definecolor{shaderulecolor}{rgb}{0.0,0.0,0.0}%
-  \setlength{\shadeboxrule}{1.5pt}%
-  \begin{definitions}[#1]\hspace*{1mm}%
-}{\end{definitions}}
-
-\newenvironment{corr}[1][]{%
-  \definecolor{shadethmcolor}{rgb}{1.0,1.0,1.0}%
-  \definecolor{shaderulecolor}{rgb}{0.0,0.0,0.0}%
-  \setlength{\shadeboxrule}{1.5pt}%
-  \begin{cors}[#1]\hspace*{1mm}%
-}{\end{cors}}
-
-\newenvironment{summary}[1][]{%
-  \definecolor{shadethmcolor}{rgb}{1.0,1.0,1.0}%
-  \definecolor{shaderulecolor}{rgb}{0.0,0.0,0.0}%
-  \setlength{\shadeboxrule}{1.5pt}%
-  \begin{zuss}[#1]\hspace*{1mm}%
-}{\end{zuss}}
-
-\newenvironment{axiom}[1][]{%
-  \definecolor{shadethmcolor}{rgb}{1.0,1.0,1.0}%
-  \definecolor{shaderulecolor}{rgb}{0.0,0.0,0.0}%
-  \setlength{\shadeboxrule}{1.5pt}%
-  \begin{axioms}[#1]\hspace*{1mm}%
-}{\end{axioms}}
-
- \typeout{ make ensuremath function to ensure mathmode}
- \newcommand{\emath}[1]{\ensuremath{{#1}}\xspace}
-
- \newcommand{\DT}[1]{\emath{\mathrm{DT}\nbrack{#1}}}
- \newcommand{\rD}{\emath{\textrm{3D}}}
- \newcommand{\wD}{\emath{\textrm{2D}}}
- \renewcommand{\th}{\emath{^{\textrm{th}}}}
-
- % Number of cameras
- \newcommand{\Nc}{\emath{N_c}}
-
- % Number of DoFs
- \newcommand{\Nd}{\emath{N_d}}
-
- % Number of detected image features
- \newcommand{\Nf}{\emath{N_f}}
-
- % Number of edge orientations
- \newcommand{\No}{\emath{N_o}}
-
- % Point in camera coordinates
- \newcommand{\camPt}{\emath{\vec{P}}}
- \newcommand{\camPti}[1]{\emath{\vec{P}_{#1}}}
-
- % Measured point in camera coordinates
- \newcommand{\msdCamPt}{\emath{\tilde{\vec{P}}}}
-
- % Point in image coordinates
- \newcommand{\imgPt}{\emath{\vec{p}}}
- \newcommand{\imgPti}[1]{\emath{\vec{p}_{#1}}}
-
- % Measured point in image coordinates
- \newcommand{\msdPt}{\emath{\tilde{\vec{p}}}}
- \newcommand{\msdPti}[1]{\emath{\tilde{\vec{p}}_{#1}}}
-
- % Optimisation result
- \newcommand{\optRes}{\emath{\tilde{\vec{\Phi}}}}
-
- % Optimisation parameter
- \newcommand{\optPrm}{\emath{\vec{\Phi}}}
- \newcommand{\optPrmi}[1]{\emath{\vec{\Phi}^{#1}}}
-
- % Quantised optimisation parameter
- \newcommand{\optQnt}{\emath{\lfloor\optPrm\rfloor}}
- \newcommand{\optQnti}[1]{\emath{{\lfloor\optPrm\rfloor}^{#1}}}
-
- % Camera parameter
- \newcommand{\camPrm}{\emath{\kappa}}
-
- % Estimated camera parameter
- \newcommand{\camCal}{\emath{\tilde{\kappa}}}
-
- % Pose
- \newcommand{\pose}{\emat{\vec{\Phi}}}
- \newcommand{\poseCmp}[1]{\emath{\Phi_{#1}}}
-
- % Model
- \newcommand{\model}{\emath{\mathcal{M}}}
-
- % Template
- \newcommand{\templ}{T}
-
- % Template set
- \newcommand{\templSet}{\emath{\mathcal{T}}}
-
- % Lattice limits
- \newcommand{\latMin}{\emath{\underline{\vec{\Lambda}}}}
- \newcommand{\latMini}[1]{\emath{\underline{\Lambda}_{#1}}}
- \newcommand{\latMax}{\emath{\overline{\vec{\Lambda}}}}
- \newcommand{\latMaxi}[1]{\emath{\overline{\Lambda}_{#1}}}
-
- % CCD density parameters
- \newcommand{\ccdMu}{\emath{{\vec{\mu}}_{\optPrm}}}
- \newcommand{\ccdSigma}{\emath{{\mat{\Sigma}}_{\optPrm}}}
- \newcommand{\ccdMuPrior}{\emath{\vec{\mu}_{\optPrm}^{0}}}
- \newcommand{\ccdSigmaPrior}{\emath{\mat{\Sigma}_{\optPrm}^{0}}}
-
- % CCD curve normal
- \newcommand{\ccdNs}{\emath{\vec{n}_s}}
-
- \newcommand{\partialdiff}[2]{\emath{\frac{\partial {#1}}{\partial {#2}}}}
-
- %%%%%%%%%%%%%%%%%%%%%%%%%%
- % Gauß-Klammern
- %%%%%%%%%%%%%%%%%%%%%%%%%%
- \newcommand{\ceil}[1]{\emath{\lceil{#1}\rceil}}
- \newcommand{\floor}[1]{\emath{\lfloor{#1}\rfloor}}
-
- %%%%%%%%%%%%%%%%%%%%%%%%%%
- % Average Operator (analog zu min, max)
- %%%%%%%%%%%%%%%%%%%%%%%%%%
- \def\avg{\emath{\mathop{\mathgroup\symoperators avg}}}
-
- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% tools %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
- \newcommand{\rowvector}[2]{%
-   \emath{\begin{pmatrix}#1\\#2\end{pmatrix}}
- }
- \newcommand{\rowvectorT}[2]{\emath{\left(#1,#2\right)^t}}
-
- \newcommand{\rowvectorthree}[3]{\emath{\begin{pmatrix}#1\\#2\\#3\end{pmatrix}}}
- \newcommand{\rowvectorthreeT}[3]{\emath{\left( #1 #2 #3\right)^t}}
-
- \newcommand{\rowvectorfour}[4]{\emath{\begin{pmatrix}#1\\#2\\#3\\#4\end{pmatrix}}}
-
- % Scalar product
- \newcommand{\scp}[2]{\emath{\left<#1,#2\right>}}
-
- \newcommand{\minop}[2]{\emath{\mathop{\mathrm{#1}}\limits_{#2}\},}}
-
- \newcommand{\sgn}[1]{\emath{\mathop{\mathrm{sgn}{#1}}}}
- \newcommand{\argmin}[1]{\emath{\minop{arg min}{#1}}}
- \newcommand{\minn}[1]{\emath{\minop{min}{#1}}}
- \newcommand{\maxx}[1]{\emath{\minop{max}{#1}}}
- \newcommand{\maxquant}[1]{\emath{\minop{max quant}{#1}}}
-
- \newcommand{\df}[2]{\emath{{\frac{\partial{}{#1}}{\partial{}{#2}}}}}
- \newcommand{\dR}[2]{\emath{\df{\trans{#1}{#2}{R}}{\trans{#1}{#2}{\omega}}}}
-
- \newcommand{\nbrack}[1]{\emath{\left(#1\right)}}
- \newcommand{\sbrack}[1]{\emath{\left[#1\right]}}
- \newcommand{\cbrack}[1]{\emath{\left\{#1\right\}}}
- \newcommand{\abrack}[1]{\emath{\left<#1\right>}}
-
- \typeout{ mathsymbols }
- \newcommand{\degree}{\emath{^{\circ}}}
- \newcommand{\reel}{\in\mathbbm{R} }
- \newcommand{\reelt}{\in\mathbbm{R}^{3\times 3} }
- \newcommand{\reeltu}[1]{\in\mathbbm{R}^{3\times 3}_{#1} }
- \newcommand{\reeln}[1]{\in\mathbbm{R}^{#1} }
- \newcommand{\compln}[1]{\in\mathbbm{C}^{#1} }
-
- \newcommand{\reeldimn}[1]{\emath{\mathbbm{R}^{#1}}}
- \newcommand{\compldimn}[1]{\emath{\mathbbm{C}^{#1}}}
-
- \newcommand{\ident}{\emath{\mathbbm{1}}}
-
- \newcommand{\La}{\emath{\mathcal{L}^1}}
- \newcommand{\Lb}{\emath{\mathcal{L}^2}}
-
- \newcommand{\landau}[1]{\emath{\mathcal{O}(#1)}}%landau
-
- % Evaluate #1 at position #2
- \newcommand{\atpos}[2]{\emath{\left.{#1}\right|_{#2}}}
-
- \typeout{ tools }
- \newcommand{\mat}[1]{\emath{\vec{#1}}}
-
- %%%%%%%%%%%%%%%%%%% rotation matrix
- \newcommand{\rotmat}{\emath{\begin{bmatrix}
-       \cos{\alpha}\cos{\beta} & \cos{\alpha}\sin{\beta}\sin{\gamma}-\sin{\alpha}\cos{\gamma} & \cos{\alpha}\sin{\beta}\cos{\gamma}+\sin{\alpha}\sin{\gamma}\\
-       \sin{\alpha}\cos{\beta} & \sin{\alpha}\sin{\beta}\sin{\gamma}+\cos{\alpha}\cos{\gamma} & \sin{\alpha}\sin{\beta}\cos{\gamma}-\cos{\alpha}\sin{\gamma}\\
-       -\sin{\beta} & \cos{\beta}\sin{\gamma} & \cos{\beta}\cos{\gamma}
-     \end{bmatrix}}}
-
-%
-%%left indeces
-%
-
- \newcommand\leftidx[3]{%
-   {\vphantom{#2}}#1#2#3%
- }
- \newcommand{\ltrans}[1]{\leftidx{^\mathrm{t}}{\!#1}{}}
-
-
-% Consistent index scheme: top left: Tgt coordinate system, bottom left: src
-% coordinate system, bottom right: point index
- \newcommand{\idx}[4]{{}^{#2}_{#3}\hspace{-0.1em}#1_{#4}}
-
- \typeout{**** End Math Environemt **** }
- \typeout{***** **** **** **** ****}
+\RequirePackage{wissmath}
 \fi
 
 %% ---------------- end of usepackages -------------
@@ -537,55 +253,7 @@ section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
 \end{tabular}%
 }}
 
-%================= Add a shaded background to floating figures =================
-\makeatletter
-\newenvironment{myfloatingfigure}[2][v]%
-{\@tfor \@tempa :=#1\do
-         {\if\@tempa r\global\oddpagestrue\fi
-          \if\@tempa l\global\oddpagesfalse\fi
-          \if\@tempa p%
-              \ifodd\c@page\global\oddpagestrue
-                \else\global\oddpagesfalse\fi
-          \fi
-          \if\@tempa v%
-             \ifnum\theOptionTest=0
-                 \ifodd\c@page\global\oddpagestrue
-                   \else\global\oddpagesfalse\fi
-             \else
-                  \ifodd\theOptionTest\global\oddpagestrue
-                    \else\global\oddpagesfalse\fi
-             \fi
-          \fi
-         }
- \expandafter\ifx\csname oldoutput\endcsname\relax% ref. TeXbook Ex.7.7
-    \PackageError{floatflt}{The `floatflt' package is not initialized}
-     {Try to reinstall the `floatflt' package.\MessageBreak
-      Type `x' to quit or <Return> to try to go on.}\@@end\fi
- \global\everypar={\tryfig\oldeverypar}% must be set globally!
- \global\advance\ffigcount by 1
- \iffigprocessing
-    {\count0=\ffigcount\advance\count0 by -1
-     \PackageWarningNoLine{floatflt}{Floating figures \the\count0\space%
-       \space and \the\ffigcount\space colliding}%
-    }%
- \fi
- \iftabprocessing \PackageWarningNoLine{floatflt}{Floating figure %
-   \the\ffigcount\space and floating table \the\ftabcount\space colliding}
- \fi
- \def\@captype{figure}
- \global\setlength{\floatfltwidth}{#2}
- \global\figprocessingtrue
- \setbox2=\vbox\bgroup% begin of figbox
-                               \hrule height 0pt width #2 depth 0pt%
-                               \hsize=#2%
 
-}
-{
-\egroup
-\global\setbox\figbox=\hbox{\colorbox[gray]{0.95}{\box2}}%
-\figinsert\par%
-}
-\makeatother
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
@@ -615,88 +283,8 @@ section]      %im Inhaltsverzeichnis auf section-Ebene erscheinen
 }
 \makeatother
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Tabellenspaltentypen (benoetigt colortbl)
-%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\PBS}[1]{\let\temp=\\#1\let\\=\temp}
-\newcolumntype{y}{>{\PBS{\raggedright\hspace{0pt}}}p{1.35cm}}
-\newcolumntype{z}{>{\PBS{\raggedright\hspace{0pt}}}p{2.5cm}}
-\newcolumntype{q}{>{\PBS{\raggedright\hspace{0pt}}}p{6.5cm}}
-\newcolumntype{g}{>{\columncolor[gray]{0.8}}c} % Grau
-\newcolumntype{G}{>{\columncolor[gray]{0.9}}c} % helleres Grau
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Tiefstellen von Text
-%%%%%%%%%%%%%%%%%%%%%%%%%%
-% S\tl{0} setzt die 0 unter das S (ohne Mathemodus!)
-% zum Hochstellen gibt es uebrigens \textsuperscript
-\makeatletter
-\DeclareRobustCommand*\textlowerscript[1]{%
-  \@textlowerscript{\selectfont#1}}
-\def\@textlowerscript#1{%
-  {\m@th\ensuremath{_{\mbox{\fontsize\sf@size\z@#1}}}}}
-\let\tl\textlowerscript
-\let\ts\textsuperscript
-\makeatother
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Einbinden von Graphiken
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% global scaling factor
-\def\gsf{0.9}
-%% Graphik,
-%% 3 Argumente: Datei, Label, Unterschrift
-\newcommand{\Abbildung}[3]{%
-	\begin{figure}[tbh] %
-	\centerline{\scalebox{\gsf}{\includegraphics*{#1}}} %
-	\caption{#2} %
-	\label{#3} %
-	\end{figure} %
-}
-\let\Abb\Abbildung
-
-%% Abbps
-%% Graphik, skaliert, Angabe der Position
-%% 5 Argumente: Position, Breite (0 bis 1.0), Datei, Label, Unterschrift
-\newcommand{\Abbildungps}[5]{%
-	\begin{figure}[#1]%
-	\begin{center}
-	\scalebox{\gsf}{\includegraphics*[width=#2\textwidth]{#3}}%
-	\caption{#4}%
-	\label{#5}%
-	\end{center}
-	\end{figure}%
-}
-\let\Abbps\Abbildungps
-
-%% Graphik, Angabe der Position, frei wählbares Argument für includegraphics
-%% 5 Argumente: Position, Optionen, Datei, Label, Unterschrift
-\newcommand{\Abbildungpf}[5]{%
-\begin{figure}[#1]%
-\begin{center}
-\scalebox{\gsf}{\includegraphics*[#2]{#3}}%
-\caption{#4}%
-\label{#5}%
-\end{center}
-\end{figure}%
-}
-\let\Abbpf\Abbildungpf
-
-%% include Graphic with fixed size,
-%% @param Position
-%% @param path to file
-%% @param Label
-%% @param text
-\newcommand{\Abbildungfps}[4]{%
-	\begin{figure}[#1]%
-	\begin{center}
-	\scalebox{\gsf}{\includegraphics*[width=1.0\textwidth]{#2}}%
-	\caption{#3}%
-	\label{#4}%
-	\end{center}
-	\end{figure}%
-}
-\let\Abbps\Abbildungfps
 
 %make title functions
 \makeatletter

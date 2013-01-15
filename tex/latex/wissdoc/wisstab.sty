@@ -1,4 +1,3 @@
-%% LaTeX2e Formatklasse für die Diplomarbeit    -*-Mode: LaTeX;-*-
 %%
 %% Copyright (C) 2013 anton Feldmann
 %%
@@ -13,9 +12,34 @@
 %% --
 %%
 
-\RequirePackage{setspace}
-\RequirePackage{lscape}		% landscape picture
-\RequirePackage{longtable}     	% seiten{\"u}bergreifende Tabellen
-\RequirePackage{tabularx} 		% automatische Spaltenbreite
-\RequirePackage{supertabular} 	% mehrseitige tabellen
-\RequirePackage{array}          	% fuer aufwändigere Tabellen
+\usepackage{setspace}
+\usepackage{lscape}		% landscape picture
+\usepackage{longtable}     	% seiten{\"u}bergreifende Tabellen
+\usepackage{tabularx} 		% automatische Spaltenbreite
+\usepackage{supertabular} 	% mehrseitige tabellen
+\usepackage{array}          	% fuer aufwändigere Tabellen
+\usepackage{colortbl}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Tabellenspaltentypen (benoetigt colortbl)
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\PBS}[1]{\let\temp=\\#1\let\\=\temp}
+\newcolumntype{y}{>{\PBS{\raggedright\hspace{0pt}}}p{1.35cm}}
+\newcolumntype{z}{>{\PBS{\raggedright\hspace{0pt}}}p{2.5cm}}
+\newcolumntype{q}{>{\PBS{\raggedright\hspace{0pt}}}p{6.5cm}}
+\newcolumntype{g}{>{\columncolor[gray]{0.8}}c} % Grau
+\newcolumntype{G}{>{\columncolor[gray]{0.9}}c} % helleres Grau
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Tiefstellen von Text
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+% S\tl{0} setzt die 0 unter das S (ohne Mathemodus!)
+% zum Hochstellen gibt es uebrigens \textsuperscript
+\makeatletter
+\DeclareRobustCommand*\textlowerscript[1]{%
+  \@textlowerscript{\selectfont#1}}
+\def\@textlowerscript#1{%
+  {\m@th\ensuremath{_{\mbox{\fontsize\sf@size\z@#1}}}}}
+\let\tl\textlowerscript
+\let\ts\textsuperscript
+\makeatother
