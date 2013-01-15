@@ -8,10 +8,47 @@
 
 #THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE  WARRANTIES# OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR  COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,  ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+import os
+import os.path
+import sys
+from waflib import Utils
+
+platform = Utils.unversioned_sys_platform()
+default_prefix='/usr/share/texmf/'
+
+top='.'
+out='build'
+
+def options(opt):
+	opt.add_option('--prefix', dest='prefix', default=default_prefix, help='installation prefix [default: %r]' % default_prefix)
+
 def configure(conf):
-   conf.check_tool('tex')
+	local_prefix=os.environ.get('TEXMFHOME')
+	if not local_prefix:
+		if platform == 'win32':
+			print('Windows ??')
+			# win32 preserves the case, but gettempdir does not
+		else:
+			local_prefix=conf.env.PREFIX
+
+	default_prefix=local_prefix
+
+def config_example(conf):
+	conf.load('tex')
+
+def build_example(bld):
+	bld(features = 'tex',
+	    type     = 'latex', # pdflatex or xelatex
+	    source   = 'tex/example/diss/Diss.tex', # mandatory, the source
+	    outs     = 'pdf', # 'pdf' or 'ps pdf'
+	    prompt   = 1, # 0 for the batch mode
+	    install_path = 'build/example/'
+	    )
+
+
 
 def build(bld):
-   obj=bld.new_task_gen(features='tex')
-   obj.source='source_tex_file.tex'
-   bld.install_files('${PREFIX}','output_pdf_file.pdf')
+	bld.install_files('${PREFIX}/tex/latex/wissdoc/', 'tex/latex/wissdoc/*.sty')
+	bld.install_files('${PREFIX}/tex/latex/wissdoc/', 'tex/latex/wissdoc/*.cls')
+	bld.install_files('${PREFIX}/tex/latex/biblatex/', 'tex/latex/biblatex/*.bst')
+
